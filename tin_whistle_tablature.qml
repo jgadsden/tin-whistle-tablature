@@ -20,8 +20,8 @@
 //  the file LICENCE.GPL
 //=============================================================================
 
-import QtQuick 2.0
-import MuseScore 1.0
+import QtQuick 2.9
+import MuseScore 3.0
 
 MuseScore {
    version: "0.1"
@@ -83,30 +83,8 @@ MuseScore {
       }
 
       // walk through the score for each (tin whistle) staff
-      var basePitch
-      var tabOffsetY   // according to the lowest note for the type of whistle
+      var basePitch = 74   // D tuning (the most common)
       for (var staff = startStaff; staff <= endStaff; staff++) {
-         // check that it is for a tin whistle
-         var instrument = curScore.parts[staff].instrumentId
-         if (instrument == "wind.flutes.whistle.tin") {
-            basePitch = 72   // C tuning
-            tabOffsetY = 10.3
-         } else if (instrument == "wind.flutes.whistle.tin.bflat") {
-            basePitch = 70   // B flat tuning
-            tabOffsetY = 10.6
-         } else if (instrument == "wind.flutes.whistle.tin.d") {
-            basePitch = 74   // D tuning (the most common)
-            tabOffsetY = 10
-         } else {
-            console.log("Skipped staff " + staff + " for instrument: " + instrument)
-            continue
-         }
-         console.log("Staff " + staff + " whistle type: " + instrument)
-         
-         if (curScore.hasLyrics) {
-            tabOffsetY += 3   // try not to clash with any lyrics
-         }
-
          // Musescore supports up to 4 voices, but tin whistle uses only one
          cursor.voice = 0
          cursor.rewind(1); // beginning of selection
@@ -128,8 +106,7 @@ MuseScore {
                   text.text = selectTab(pitch, basePitch, 25) 
                   // there seems to be no way of knowing the exact horizontal pos.
                   // of a grace note, so we have to guess:
-                  text.pos.x = -2.5
-                  text.pos.y = tabOffsetY   // place the tab below the staff
+                  text.offsetX = -2.5
                   cursor.add(text)
                   // new text for next element
                   text  = newElement(Element.STAFF_TEXT)
@@ -138,7 +115,6 @@ MuseScore {
                // there are no chords when playing the tin whistle, so use first note
                var pitch = cursor.element.notes[0].pitch
                text.text = selectTab(pitch, basePitch, 35)
-               text.pos.y = tabOffsetY   // place the tab below the staff
                cursor.add(text)
             } // end if CHORD
             cursor.next()
