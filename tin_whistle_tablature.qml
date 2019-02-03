@@ -84,7 +84,7 @@ MuseScore {
 
       // walk through the score for each (tin whistle) staff
       var basePitch
-      var tabOffsetY   // according to the lowest note for the type of whistle      
+      var tabOffsetY   // according to the lowest note for the type of whistle
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
          var instrument = curScore.parts[staff].instrumentId
@@ -102,45 +102,47 @@ MuseScore {
             continue
          }
          console.log("Staff " + staff + " whistle type: " + instrument)
+         
+         if (curScore.hasLyrics) {
+            tabOffsetY += 3   // try not to clash with any lyrics
+         }
 
-         // Musescore supports up to 4 voices
-         for (var voice = 0; voice < 4; voice++) {
-            cursor.rewind(1); // beginning of selection
-            cursor.voice    = voice
-            cursor.staffIdx = staff
+         // Musescore supports up to 4 voices, but tin whistle uses only one
+         cursor.voice = 0
+         cursor.rewind(1); // beginning of selection
+         cursor.staffIdx = staff
 
-            if (fullScore)  // no selection
-               cursor.rewind(0); // beginning of score
+         if (fullScore)  // no selection
+            cursor.rewind(0); // beginning of score
 
-            while (cursor.segment && (fullScore || cursor.tick < endTick)) {
-               if (cursor.element && cursor.element.type == Element.CHORD) {
-                  var text = newElement(Element.STAFF_TEXT)
+         while (cursor.segment && (fullScore || cursor.tick < endTick)) {
+            if (cursor.element && cursor.element.type == Element.CHORD) {
+               var text = newElement(Element.STAFF_TEXT)
 
-                  // handle grace notes first
-                  var graceChords = cursor.element.graceNotes
-                  if (graceChords.length > 0) {
-                     // there are no chords when playing the tin whistle
-                     var pitch = graceChords[0].notes[0].pitch
-                     // grace notes are shown a bit smaller
-                     text.text = selectTab(pitch, basePitch, 25) 
-                     // there seems to be no way of knowing the exact horizontal pos.
-                     // of a grace note, so we have to guess:
-                     text.pos.x = -2.5
-                     text.pos.y = tabOffsetY   // place the tab below the staff
-                     cursor.add(text)
-                     // new text for next element
-                     text  = newElement(Element.STAFF_TEXT)
-                  }
-
-                  // there are no chords when playing the tin whistle, so use first note
-                  var pitch = cursor.element.notes[0].pitch
-                  text.text = selectTab(pitch, basePitch, 35)
+               // handle grace notes first
+               var graceChords = cursor.element.graceNotes
+               if (graceChords.length > 0) {
+                  // there are no chords when playing the tin whistle
+                  var pitch = graceChords[0].notes[0].pitch
+                  // grace notes are shown a bit smaller
+                  text.text = selectTab(pitch, basePitch, 25) 
+                  // there seems to be no way of knowing the exact horizontal pos.
+                  // of a grace note, so we have to guess:
+                  text.pos.x = -2.5
                   text.pos.y = tabOffsetY   // place the tab below the staff
                   cursor.add(text)
-               } // end if CHORD
-               cursor.next()
-            } // end while segment
-         } // end for voice
+                  // new text for next element
+                  text  = newElement(Element.STAFF_TEXT)
+               }
+
+               // there are no chords when playing the tin whistle, so use first note
+               var pitch = cursor.element.notes[0].pitch
+               text.text = selectTab(pitch, basePitch, 35)
+               text.pos.y = tabOffsetY   // place the tab below the staff
+               cursor.add(text)
+            } // end if CHORD
+            cursor.next()
+         } // end while segment
       } // end for staff
       Qt.quit()
    } // end onRun
