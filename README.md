@@ -7,10 +7,20 @@ This plugin relies on a font being installed, which is not included in this down
 
 https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip
 
-To install the font it is usually just a case of double-clicking the downloaded .ttf file and agreeing to the install process.
+To install the font it is usually just a case of double-clicking the downloaded .ttf file and agreeing to the install process. If that does not work then on linux systems try copying the TinWhistleTab.ttf font file to /usr/share/fonts/truetype/.
 
-There are two versions of this plugin. The version for MuseScore 2 will check that the staff is for  a tin whistle and adjust the tab diagram position for the lowest note possible. I have not been able to repeat this for MuseScore 3 so it just assumes that a whistle tuned to D is used - this being the most common.
+There are two versions of this plugin. One for MuseScore 2.x on a branch 'version2' and the other for Musecore 3.x which is on the master branch.
 
-Version for MuseScore 2: https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip
+The version for MuseScore 2 will check that the staff is for  a tin whistle and adjust the tab diagram position for the lowest note possible. I have not been able to repeat this for MuseScore 3 so it just assumes that a whistle tuned to D is used - this being the most common.
 
-Version for MuseScore 3: https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip
+Version for MuseScore 2.x : https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip
+
+Version for MuseScore 3.x : https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip
+
+# Installation
+
+To use the plugin first install it according to the instructions in the:
+* 2.x Handbook https://musescore.org/en/handbook/plugins#installation
+
+or the
+* 3.x Handbook https://musescore.org/en/handbook/3/plugins#installation
