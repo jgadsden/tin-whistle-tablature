@@ -32,6 +32,8 @@ Code repository: https://github.com/jgadsden/tin-whistle-tablature/
 
 Issues: https://github.com/jgadsden/tin-whistle-tablature/issues
 
+MuseScore issue tracker: https://musescore.org/en/project/issues/TinWhistleTablature
+
 License: https://github.com/jgadsden/tin-whistle-tablature/blob/master/LICENSE
 
 Upload from: https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip
