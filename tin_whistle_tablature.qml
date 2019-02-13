@@ -25,7 +25,7 @@ import MuseScore 3.0
 
 MuseScore {
    version: "0.1"
-   description: qsTr("This plugin provides fingering diagrams for the tin whistle")
+   description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
