@@ -89,13 +89,28 @@ MuseScore {
          // check that it is for a tin whistle
          var instrument = curScore.parts[staff].instrumentId
          if (instrument == "wind.flutes.whistle.tin") {
+            basePitch = 72   // default is C tuning (even though D is the most common)
+            tabOffsetY = 10.3
+         } else if (instrument == "wind.flutes.whistle.tin.c") {
             basePitch = 72   // C tuning
             tabOffsetY = 10.3
          } else if (instrument == "wind.flutes.whistle.tin.bflat") {
             basePitch = 70   // B flat tuning
             tabOffsetY = 10.6
          } else if (instrument == "wind.flutes.whistle.tin.d") {
+            basePitch = 74   // D tuning
+            tabOffsetY = 10
+         } else if (instrument == "wind.flutes.whistle.tin.common") {
             basePitch = 74   // D tuning (the most common)
+            tabOffsetY = 10
+         } else if (instrument == "wind.flutes.whistle.tin.eflat") {
+            basePitch = 71   // E flat tuning
+            tabOffsetY = 10
+         } else if (instrument == "wind.flutes.whistle.tin.f") {
+            basePitch = 77   // F tuning
+            tabOffsetY = 10
+         } else if (instrument == "wind.flutes.whistle.tin.g") {
+            basePitch = 79   // G tuning
             tabOffsetY = 10
          } else {
             console.log("Skipped staff " + staff + " for instrument: " + instrument)
