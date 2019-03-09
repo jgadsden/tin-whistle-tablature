@@ -3,7 +3,9 @@
 MuseScore plugin to add tablature (fingering) diagrams to a tin whistle staff in a score
 
 ### Introduction
-This provides a plugin to automatically add fingering / tab diagrams to the notes in scores for tin whistle. The plugin will adjust for tin whistles tuned to D, C and Bb, according to the instrument defined for each staff. Note that if the staff instrument is not a whistle then no tabs are applied, otherwise the plugin will adjust the tab diagram position for the lowest note possible (currently D, C or Bb).
+This provides a plugin to automatically add fingering / tab diagrams to the notes in scores for tin whistle. The plugin will adjust for tin whistles tuned to D, C and Bb, according to the instrument defined for each staff. Note that if the staff instrument is not a whistle then no tabs are applied, otherwise the plugin will adjust the tab diagram position for the lowest note possible for the particular tuning. 
+
+The common whistle types are supported D (the most common), C and Bb; along with the less common types Eb, F and G.
 
 ### Installation
 * [Download plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip) for MuseScore version 2.
