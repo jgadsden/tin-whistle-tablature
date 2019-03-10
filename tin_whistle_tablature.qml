@@ -24,7 +24,7 @@ import QtQuick 2.9
 import MuseScore 3.0
 
 MuseScore {
-   version: "0.1"
+   version: "3.0"
    description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 

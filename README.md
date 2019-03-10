@@ -85,3 +85,11 @@ has not been possible for MuseScore 3 so the plugin just assumes that a whistle
 tuned to D is used - this being the most common. Once the Instrument type is
 made available to version 3 plugins then this can be fixed.
 
+### Having problems?
+Note that this plugin relies on a font being installed, see the Installation
+instructions.
+
+The plugin will skip any staffs that are not for a Tin Whistle, so for example
+if the staff is for the Irish Flute then it will not apply the tabs. This makes
+sense as other instrument's fingering will be different.
+
