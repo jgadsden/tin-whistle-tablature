@@ -1,6 +1,6 @@
 # tin-whistle-tablature
 
-MuseScore plugin to add tablature (fingering) diagrams to a tin whistle staff in
+MuseScore plugin to add tablature / finger diagrams to a tin whistle staff in
 a score
 
 ### Introduction
