@@ -149,12 +149,15 @@ MuseScore {
                   // new text for next element
                   text  = newElement(Element.STAFF_TEXT)
                }
-
-               // there are no chords when playing the tin whistle, so use first note
-               var pitch = cursor.element.notes[0].pitch
-               text.text = selectTab(pitch, basePitch, 35)
-               text.pos.y = tabOffsetY   // place the tab below the staff
-               cursor.add(text)
+               
+               // don't add tab if note is tied to previous note
+               if(cursor.element.notes[0].tieBack == null) {
+                   // there are no chords when playing the tin whistle, so use first note
+                  var pitch = cursor.element.notes[0].pitch
+                  text.text = selectTab(pitch, basePitch, 35)
+                  text.pos.y = tabOffsetY   // place the tab below the staff
+                  cursor.add(text)
+               }
             } // end if CHORD
             cursor.next()
          } // end while segment
