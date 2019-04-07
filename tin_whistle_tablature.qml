@@ -96,20 +96,29 @@ MuseScore {
          while (cursor.segment && (fullScore || cursor.tick < endTick)) {
             if (cursor.element && cursor.element.type == Element.CHORD) {
                var text = newElement(Element.STAFF_TEXT)
-
+               
+               // put text below notes
+               text.autoplace = false
+               text.offsetY = 10.5
+               
                // handle grace notes first
                var graceChords = cursor.element.graceNotes
                if (graceChords.length > 0) {
+                  // grace note text
+                  var graceText = newElement(Element.STAFF_TEXT)
+               
                   // there are no chords when playing the tin whistle
                   var pitch = graceChords[0].notes[0].pitch
+                  
                   // grace notes are shown a bit smaller
-                  text.text = selectTab(pitch, basePitch, 25) 
+                  graceText.text = selectTab(pitch, basePitch, 25) 
+                  
                   // there seems to be no way of knowing the exact horizontal pos.
                   // of a grace note, so we have to guess:
-                  text.offsetX = -2.5
-                  cursor.add(text)
-                  // new text for next element
-                  text  = newElement(Element.STAFF_TEXT)
+                  graceText.offsetX = -2.5
+                  graceText.offsetY = 10.5
+                  graceText.autoplace = false
+                  cursor.add(graceText)
                }
 
                // there are no chords when playing the tin whistle, so use first note
