@@ -80,10 +80,13 @@ MuseScore 2.x on a branch 'version2' and the other for Musecore 3.x on the
 
 ### Here be Dragons
 The version for MuseScore 2 will check that the staff is for a tin whistle and
-adjust the tab diagram position for the lowest note possible. As of Feb'19 this
+adjust the tab diagram position for the lowest note possible. As of June'19 this
 has not been possible for MuseScore 3 so the plugin just assumes that a whistle
-tuned to D is used - this being the most common. Once the Instrument type is
-made available to version 3 plugins then this can be fixed.
+tuned to D is used - this being the most common. 
+
+Once the Instrument type is made available to version 3 plugins in version 3.2
+then this can be fixed. The latest plug-in supports both the earlier default
+selection of a D whistle if you are not running v3.2 of MuseScore.
 
 ### Having problems?
 Note that this plugin relies on a font being installed, see the Installation
