@@ -20,7 +20,7 @@
 //  the file LICENCE.GPL
 //=============================================================================
 
-import QtQuick 2.9
+import QtQuick 2.0
 import MuseScore 3.0
 
 MuseScore {
@@ -31,7 +31,7 @@ MuseScore {
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
    property variant tabs : ["d", "i", "e", "j", "f", "g", "h", "a", "n", "b", "m", "c", "D", "I", "E", "J", "F", "G", "H", "A", "N", "B", "M", "C", '\u00CE']
 
-   function selectTab (pitch, basePitch, tabSize) {
+   function selectTinTabCharacter (pitch, basePitch) {
       var tabText = ""
       var index = pitch - basePitch
       if (index < 0) {
@@ -42,18 +42,37 @@ MuseScore {
          console.log("Skipped note as it was too high, index : " + pitch)
          return tabText
       }
-      tabText = "<font size=\"" + tabSize + "\"><font face=\"Tin Whistle Tab\">" + tabs[index] + "</font></font>"
+      tabText = tabs[index]
       return tabText
+   }
+
+   function setTinTabCharacterFont (text, tabSize) {
+      text.fontFace = "Tin Whistle Tab"
+      text.fontSize = tabSize
+      // Vertical align to top. (0 = top, 1 = center, 2 = bottom, 3 = baseline)
+      text.align = 0            
+      // Set text to below staff. (0 = above, 1 = below)
+      text.placement = 1
+      // Turn off note relative placement
+      text.autoplace = false
+   }
+
+   // For diagnostic use.
+   function dumpObjectEntries (obj, showUndefinedVals, title) {
+      console.log("VV -------- " + title + " ---------- VV")
+      for (let [key, value] of Object.entries(obj)) {
+         if (showUndefinedVals || (value != null)) {
+            console.log(key + "=" + value); 
+         }
+      }
+      console.log("^^ -------- " + title + " ---------- ^^")
    }
 
    onRun: {
       console.log("hello tin whistle tablature")
+
       if (typeof curScore === 'undefined')
          Qt.quit()
-
-      var score = curScore
-      console.log(curScore)
-      console.log(score.name)
 
       // select either the full score or just the selected staves
       var cursor = curScore.newCursor()
@@ -83,8 +102,53 @@ MuseScore {
       }
 
       // walk through the score for each (tin whistle) staff
-      var basePitch = 74   // D tuning (the most common)
+      var basePitch
+      var tabOffsetY   // according to the lowest note for the type of whistle
       for (var staff = startStaff; staff <= endStaff; staff++) {
+         // check that it is for a tin whistle
+         var instrument
+         if (curScore.parts[staff].instrumentId !== undefined) {
+            instrument = curScore.parts[staff].instrumentId
+         } else {
+            // Assume a D whistle if running MuseScore version is missing 
+            // the instrumentId property.
+            instrument = "wind.flutes.whistle.tin.d"
+         }
+
+         if (instrument == "wind.flutes.whistle.tin") {
+            basePitch = 72   // default is C tuning (even though D is the most common)
+            tabOffsetY = -0.7
+         } else if (instrument == "wind.flutes.whistle.tin.c") {
+            basePitch = 72   // C tuning
+            tabOffsetY = -0.7
+         } else if (instrument == "wind.flutes.whistle.tin.bflat") {
+            basePitch = 70   // B flat tuning
+            tabOffsetY = -0.4
+         } else if (instrument == "wind.flutes.whistle.tin.d") {
+            basePitch = 74   // D tuning
+            tabOffsetY = -1.0
+         } else if (instrument == "wind.flutes.whistle.tin.common") {
+            basePitch = 74   // D tuning (the most common)
+            tabOffsetY = -1.0
+         } else if (instrument == "wind.flutes.whistle.tin.eflat") {
+            basePitch = 71   // E flat tuning
+            tabOffsetY = -1.0
+         } else if (instrument == "wind.flutes.whistle.tin.f") {
+            basePitch = 77   // F tuning
+            tabOffsetY = -1.0
+         } else if (instrument == "wind.flutes.whistle.tin.g") {
+            basePitch = 79   // G tuning
+            tabOffsetY = -1.0
+         } else {
+            console.log("Skipped staff " + staff + " for instrumentId: " + instrument)
+            continue
+         }
+         console.log("Staff " + staff + " whistle type: " + instrument)
+
+         if (curScore.hasLyrics) {
+            tabOffsetY += 2.5   // try not to clash with any lyrics
+         }
+
          // Musescore supports up to 4 voices, but tin whistle uses only one
          cursor.voice = 0
          cursor.rewind(1); // beginning of selection
@@ -96,35 +160,58 @@ MuseScore {
          while (cursor.segment && (fullScore || cursor.tick < endTick)) {
             if (cursor.element && cursor.element.type == Element.CHORD) {
                var text = newElement(Element.STAFF_TEXT)
-               
-               // put text below notes
-               text.autoplace = false
-               text.offsetY = 10.5
-               
+
                // handle grace notes first
                var graceChords = cursor.element.graceNotes
                if (graceChords.length > 0) {
-                  // grace note text
-                  var graceText = newElement(Element.STAFF_TEXT)
-               
                   // there are no chords when playing the tin whistle
                   var pitch = graceChords[0].notes[0].pitch
-                  
                   // grace notes are shown a bit smaller
-                  graceText.text = selectTab(pitch, basePitch, 25) 
-                  
+                  text.text = selectTinTabCharacter(pitch, basePitch) 
+                  cursor.add(text)
+                  // Set text attributes *after* adding element to the score.
+                  setTinTabCharacterFont(text, 25)
                   // there seems to be no way of knowing the exact horizontal pos.
                   // of a grace note, so we have to guess:
-                  graceText.offsetX = -2.5
-                  graceText.offsetY = 10.5
-                  graceText.autoplace = false
-                  cursor.add(graceText)
+                  text.offsetX = -1.2
+                  // See the note below about behaviour of the text.offsetY property.
+                  text.offsetY = tabOffsetY   // place the tab below the staff
+
+                  // new text for next element
+                  text = newElement(Element.STAFF_TEXT)
                }
 
-               // there are no chords when playing the tin whistle, so use first note
-               var pitch = cursor.element.notes[0].pitch
-               text.text = selectTab(pitch, basePitch, 35)
-               cursor.add(text)
+               // don't add tab if note is tied to previous note
+               if (cursor.element.notes[0].tieBack == null) {
+                  // there are no chords when playing the tin whistle, so use first note
+                  var pitch = cursor.element.notes[0].pitch
+                  text.text = selectTinTabCharacter(pitch, basePitch)
+
+                  // NOTE - text.offsetY behaviour oddity:
+                  // When you cursor.add() a staff text element to the current cursor 
+                  // location after changing its placement to "below", the text.offsetY 
+                  // value is replaced by the UI menu "Format/Style.../Staff Text" value 
+                  // specified for the "below" placement. Thereafter any values set to 
+                  // text.offsetY are now ADDED to the current value making it grow larger 
+                  // with every assignment.
+
+                  // -- more explicitly --
+                  // Prior to the cursor.add() the text.offsetY value will contain 
+                  // the "Format/Style.../Staff Text" value 
+                  // for placement "above".
+                  cursor.add(text)      // Add the staff text at the cursor
+                  // Set text attributes *after* adding element to the score.
+                  setTinTabCharacterFont(text, 35)
+                  // At this point the text.offsetY value will contain the 
+                  // "Format/Style.../Staff Text" value for "below" regardless of what 
+                  // its previous value was.
+                  // -
+                  // Next, setting text.offsetY will actually ADD the new value to the current value thereby
+                  // acting as a numerical integrator.
+                  text.offsetY = tabOffsetY
+                  // Nudge the hole pattern to be centered under the note.
+                  text.offsetX = 0.5
+               }
             } // end if CHORD
             cursor.next()
          } // end while segment
