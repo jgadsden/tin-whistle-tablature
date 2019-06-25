@@ -88,6 +88,10 @@ Once the Instrument type is made available to version 3 plugins in version 3.2
 then this can be fixed. The latest plug-in supports both the earlier default
 selection of a D whistle if you are not running v3.2 of MuseScore.
 
+Also, this plugin only supports grace notes that lead the main note. Tabs for
+trailing grace notes will be rendered as leading notes which is probably not
+what you want.
+
 ### Having problems?
 Note that this plugin relies on a font being installed, see the Installation
 instructions.

@@ -50,9 +50,9 @@ MuseScore {
       text.fontFace = "Tin Whistle Tab"
       text.fontSize = tabSize
       // Vertical align to top. (0 = top, 1 = center, 2 = bottom, 3 = baseline)
-      text.align = 0            
-      // Set text to below staff. (0 = above, 1 = below)
-      text.placement = 1
+      text.align = 0
+      // Set text to below the staff.
+      text.placement = Placement.BELOW
       // Turn off note relative placement
       text.autoplace = false
    }
@@ -164,21 +164,37 @@ MuseScore {
                // handle grace notes first
                var graceChords = cursor.element.graceNotes
                if (graceChords.length > 0) {
-                  // there are no chords when playing the tin whistle
-                  var pitch = graceChords[0].notes[0].pitch
-                  // grace notes are shown a bit smaller
-                  text.text = selectTinTabCharacter(pitch, basePitch) 
-                  cursor.add(text)
-                  // Set text attributes *after* adding element to the score.
-                  setTinTabCharacterFont(text, 25)
-                  // there seems to be no way of knowing the exact horizontal pos.
-                  // of a grace note, so we have to guess:
-                  text.offsetX = -1.2
-                  // See the note below about behaviour of the text.offsetY property.
-                  text.offsetY = tabOffsetY   // place the tab below the staff
+                  // This code only assumes that grace notes can only precede the main note.
+                  // The assumption is based on the fact that MusicXML doesn't support the grace
+                  // linkage to the preceding note. They will be attached to the next note in 
+                  // XML sequence.
 
-                  // new text for next element
-                  text = newElement(Element.STAFF_TEXT)
+                  var graceNoteWidth = 1.2;     // Assumed grace note width
+                  var graceNoteNudge = 0.0;     // Assumed note cluster offset from main note
+                  // Compute starting offset to location of the current grace note.
+                  var graceLocationX = graceChords.length * -graceNoteWidth + graceNoteNudge;
+                  for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
+                     // there are no chords when playing the tin whistle
+                     var pitch = graceChords[chordNum].notes[0].pitch
+                     text.text = selectTinTabCharacter(pitch, basePitch)
+
+                     // Note: Set text attributes *after* adding element to the score.
+                     cursor.add(text)
+
+                     // grace notes are shown a bit smaller
+                     setTinTabCharacterFont(text, 25)
+
+                     // there seems to be no way of knowing the exact horizontal pos.
+                     // of a grace note, so we have to guess:
+                     text.offsetX = graceLocationX
+                     // Move to the next note location.
+                     graceLocationX += graceNoteWidth;
+                     // (See the note below about behaviour of the text.offsetY property.)
+                     text.offsetY = tabOffsetY   // place the tab below the staff
+
+                     // Create new text for next element
+                     text = newElement(Element.STAFF_TEXT)                 
+                  }
                }
 
                // don't add tab if note is tied to previous note
