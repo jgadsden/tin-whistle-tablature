@@ -62,7 +62,7 @@ MuseScore {
       console.log("VV -------- " + title + " ---------- VV")
       for (let [key, value] of Object.entries(obj)) {
          if (showUndefinedVals || (value != null)) {
-            console.log(key + "=" + value); 
+            console.log(key + "=" + value);
          }
       }
       console.log("^^ -------- " + title + " ---------- ^^")
@@ -75,11 +75,11 @@ MuseScore {
          Qt.quit()
 
       // select either the full score or just the selected staves
-      var cursor = curScore.newCursor()
-      var startStaff
-      var endStaff
-      var endTick
-      var fullScore = false
+      var cursor = curScore.newCursor();
+      var startStaff;
+      var endStaff;
+      var endTick;
+      var fullScore = false;
       cursor.rewind(1)
       if (!cursor.segment) { // no selection
          fullScore = true
@@ -106,11 +106,12 @@ MuseScore {
       var tabOffsetY   // according to the lowest note for the type of whistle
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
-         var instrument
-         if (curScore.parts[staff].instrumentId !== undefined) {
+         var instrument;
+         var hasInstrumentId = curScore.parts[staff].instrumentId !== undefined;
+         if (hasInstrumentId) {
             instrument = curScore.parts[staff].instrumentId
          } else {
-            // Assume a D whistle if running MuseScore version is missing 
+            // Assume a D whistle if currently running MuseScore version is missing
             // the instrumentId property.
             instrument = "wind.flutes.whistle.tin.d"
          }
@@ -151,75 +152,107 @@ MuseScore {
 
          // Musescore supports up to 4 voices, but tin whistle uses only one
          cursor.voice = 0
-         cursor.rewind(1); // beginning of selection
+         cursor.rewind(1)  // beginning of selection
          cursor.staffIdx = staff
 
          if (fullScore)  // no selection
-            cursor.rewind(0); // beginning of score
+            cursor.rewind(0) // beginning of score
+
+         // Some positioning values used to render grace notes.
+         // Note that these are determined by observation of the results
+         // and appear to be consistent. It would be better to find the actual
+         // location of the grace notes but that capability isn't exposed at
+         // this time (circa MuseScore 3.2).
+         var graceNoteWidth = 1.2         // Assumed grace note width
+         var graceNoteNudgeLeading = 0.0  // Assumed leading note cluster offset from main note
+         var graceNoteNudgeTrailing = 3.0 // Assumed trailing note cluster offset from main note
+
+         // TinWhistleTab.ttf character image font sizes.
+         // Note that these are determined by observation of the results.
+         var tabFontSizeNormal = 35       // Size of normal sized whistle tab image
+         var tabFontSizeGrace = 25        // Size of grace note sized whistle tab image
 
          while (cursor.segment && (fullScore || cursor.tick < endTick)) {
             if (cursor.element && cursor.element.type == Element.CHORD) {
-               var text = newElement(Element.STAFF_TEXT)
+               var text = newElement(Element.STAFF_TEXT);
 
-               // handle grace notes first
-               var graceChords = cursor.element.graceNotes
+               // Scan grace notes for existence and add to appropriate lists...
+               var leadingLifo = new Array();
+               var trailingFifo = new Array();
+               var graceChords = cursor.element.graceNotes;
                if (graceChords.length > 0) {
-                  // This code only assumes that grace notes can only precede the main note.
-                  // The assumption is based on the fact that MusicXML doesn't support the grace
-                  // linkage to the preceding note. They will be attached to the next note in 
-                  // XML sequence.
+                  var hasNoteType = graceChords[0].notes[0].noteType !== undefined;
+                  if (hasNoteType) {
+                     for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
+                        var noteType = graceChords[chordNum].notes[0].noteType
+                        if (noteType == NoteType.GRACE8_AFTER || noteType == NoteType.GRACE16_AFTER ||
+                              noteType == NoteType.GRACE32_AFTER) {
+                           trailingFifo.unshift(graceChords[chordNum].notes[0])
+                        } else {
+                           leadingLifo.push(graceChords[chordNum].notes[0])
+                        }
+                     }
+                  } else {
+                     // Assume all grace notes are of the leading variety since
+                     // the NoteType capability doesn't exist in the running version of
+                     // MuseScore.
+                     for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
+                        leadingLifo.unshift(graceChords[chordNum].notes[0])
+                     }
+                  }
+                  // Build separate lists of leading and trailing grace notes.
+               }
 
-                  var graceNoteWidth = 1.2;     // Assumed grace note width
-                  var graceNoteNudge = 0.0;     // Assumed note cluster offset from main note
-                  // Compute starting offset to location of the current grace note.
-                  var graceLocationX = graceChords.length * -graceNoteWidth + graceNoteNudge;
-                  for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
+               // First render leading grace notes if any exist...
+               if (leadingLifo.length > 0) {
+                  // Compute starting offset to location of the lead leftmost grace note.
+                  var graceLocationX = leadingLifo.length * -graceNoteWidth + graceNoteNudgeLeading;
+                  for (var chordNum = 0; chordNum < leadingLifo.length; chordNum++) {
                      // there are no chords when playing the tin whistle
-                     var pitch = graceChords[chordNum].notes[0].pitch
-                     text.text = selectTinTabCharacter(pitch, basePitch)
+                     var note = leadingLifo[chordNum];
+                     var pitch = note.pitch;
 
+                     text.text = selectTinTabCharacter(pitch, basePitch)
                      // Note: Set text attributes *after* adding element to the score.
                      cursor.add(text)
-
                      // grace notes are shown a bit smaller
-                     setTinTabCharacterFont(text, 25)
-
+                     setTinTabCharacterFont(text, tabFontSizeGrace)
                      // there seems to be no way of knowing the exact horizontal pos.
                      // of a grace note, so we have to guess:
                      text.offsetX = graceLocationX
                      // Move to the next note location.
                      graceLocationX += graceNoteWidth;
-                     // (See the note below about behaviour of the text.offsetY property.)
+                     // (See the note below about behavior of the text.offsetY property.)
                      text.offsetY = tabOffsetY   // place the tab below the staff
 
-                     // Create new text for next element
-                     text = newElement(Element.STAFF_TEXT)                 
+                     // Create new text element for next tab placement
+                     text = newElement(Element.STAFF_TEXT)
                   }
                }
 
-               // don't add tab if note is tied to previous note
-               if (cursor.element.notes[0].tieBack == null) {
+               // Next process the parent note...
+               if (cursor.element.notes[0].tieBack == null) {  // don't add tab if note is tied to previous note
                   // there are no chords when playing the tin whistle, so use first note
-                  var pitch = cursor.element.notes[0].pitch
+                  var pitch = cursor.element.notes[0].pitch;
                   text.text = selectTinTabCharacter(pitch, basePitch)
 
-                  // NOTE - text.offsetY behaviour oddity:
-                  // When you cursor.add() a staff text element to the current cursor 
-                  // location after changing its placement to "below", the text.offsetY 
-                  // value is replaced by the UI menu "Format/Style.../Staff Text" value 
-                  // specified for the "below" placement. Thereafter any values set to 
-                  // text.offsetY are now ADDED to the current value making it grow larger 
+                  // NOTE - text.offsetY behavior oddity:
+                  // When you cursor.add() a staff text element to the current cursor
+                  // location after changing its placement to "below", the text.offsetY
+                  // value is replaced by the UI menu "Format/Style.../Staff Text" value
+                  // specified for the "below" placement. Thereafter any values set to
+                  // text.offsetY are now ADDED to the current value making it grow larger
                   // with every assignment.
 
                   // -- more explicitly --
-                  // Prior to the cursor.add() the text.offsetY value will contain 
-                  // the "Format/Style.../Staff Text" value 
+                  // Prior to the cursor.add() the text.offsetY value will contain
+                  // the "Format/Style.../Staff Text" value
                   // for placement "above".
                   cursor.add(text)      // Add the staff text at the cursor
                   // Set text attributes *after* adding element to the score.
-                  setTinTabCharacterFont(text, 35)
-                  // At this point the text.offsetY value will contain the 
-                  // "Format/Style.../Staff Text" value for "below" regardless of what 
+                  setTinTabCharacterFont(text, tabFontSizeNormal)
+                  // At this point the text.offsetY value will contain the
+                  // "Format/Style.../Staff Text" value for "below" regardless of what
                   // its previous value was.
                   // -
                   // Next, setting text.offsetY will actually ADD the new value to the current value thereby
@@ -227,6 +260,37 @@ MuseScore {
                   text.offsetY = tabOffsetY
                   // Nudge the hole pattern to be centered under the note.
                   text.offsetX = 0.5
+
+                  // Create new text element for next tab placement
+                  text = newElement(Element.STAFF_TEXT)
+               }
+
+               // Finally process trailing grace notes if any exist...
+               if (trailingFifo.length > 0) {
+                  // Set the starting offset to location of the first trailing grace note.
+                  var graceLocationX = graceNoteNudgeTrailing;
+
+                  for (var chordNum = 0; chordNum < trailingFifo.length; chordNum++) {
+                     // there are no chords when playing the tin whistle
+                     var note = trailingFifo[chordNum];
+                     var pitch = note.pitch;
+
+                     text.text = selectTinTabCharacter(pitch, basePitch)
+                     // Note: Set text attributes *after* adding element to the score.
+                     cursor.add(text)
+                     // grace notes are shown a bit smaller
+                     setTinTabCharacterFont(text, tabFontSizeGrace)
+                     // there seems to be no way of knowing the exact horizontal pos.
+                     // of a grace note, so we have to guess:
+                     text.offsetX = graceLocationX
+                     // Move to the next note location.
+                     graceLocationX += graceNoteWidth;
+                     // (See the note below about behavior of the text.offsetY property.)
+                     text.offsetY = tabOffsetY   // place the tab below the staff
+
+                     // Create new text element for next tab placement
+                     text = newElement(Element.STAFF_TEXT)
+                  }
                }
             } // end if CHORD
             cursor.next()
