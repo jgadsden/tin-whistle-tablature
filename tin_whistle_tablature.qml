@@ -104,7 +104,7 @@ MuseScore {
             basePitch = 74   // D tuning (the most common)
             tabOffsetY = 10
          } else if (instrument == "wind.flutes.whistle.tin.eflat") {
-            basePitch = 71   // E flat tuning
+            basePitch = 75   // E flat tuning
             tabOffsetY = 10
          } else if (instrument == "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
