@@ -9,33 +9,27 @@ if the staff instrument is not a whistle then no tabs are applied, otherwise the
 plugin will adjust the tab diagram position for the lowest note possible
 (currently D, C or Bb).
 
-Note that the plugin for MuseScore version 3 does not do this and assumes a tin
-whistle tuned to D. This is due to some general issues with version 3 plugins,
-so we expect to fix this in future.
+See the "Here be Dragons" section of this document that discusses various
+limitations of MuseScore 3 releases.
 
 ### Installation
-* If using MuseScore version 3 then download the
-[plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip) and unzip it.
+* If using MuseScore version 3 then download the [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip) and unzip it.
 
-* Alternatively if using the older version 2 then download this
-[plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip).
+* Alternatively if using the older version 2 then download this [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip).
 
-* Install using the [instructions](https://musescore.org/en/handbook/3/plugins#installation)
-in the MuseScore 3.x Handbook, which typically involves copying the QML file to
-the local MuseScore Plugin directory. If you are using MuseScore version 2.x
-then use this [handbook](https://musescore.org/en/handbook/plugins#installation) instead.
+* Install using the [instructions](https://musescore.org/en/handbook/3/plugins#installation) in the MuseScore 3.x Handbook, which typically 
+involves copying the QML file to the local MuseScore Plugin directory. If you 
+are using MuseScore version 2.x then use this [handbook](https://musescore.org/en/handbook/plugins#installation) instead.
 
-* Open MuseScore and navigate to
-['Plugins' -> 'Plugin Manager'](https://musescore.org/en/handbook/3/plugins#enable-disable-plugins)
+* Open MuseScore and navigate to ['Plugins' -> 'Plugin Manager'](https://musescore.org/en/handbook/3/plugins#enable-disable-plugins)
 to enable the plugin. Tick the box against 'tin\_whistle\_tablature' and apply
 with 'OK'.
 
 * This plugin relies on a font being installed, which is not included in this
-download but can be obtained from
-[Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip) .
-To install the font it is usually just a case of double-clicking the downloaded
-`.ttf` file and agreeing to the install process. If that does not work then on
-linux systems try copying the TinWhistleTab.ttf font file to the
+download but can be obtained from [Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip). To install the 
+font it is usually just a case of double-clicking the downloaded `.ttf` file 
+and agreeing to the install process. If that does not work then on linux
+systems try copying the TinWhistleTab.ttf font file to the 
 `/usr/share/fonts/truetype/` directory.
 
 ### Using the plugin
@@ -80,13 +74,27 @@ MuseScore 2.x on a branch 'version2' and the other for Musecore 3.x on the
 
 ### Here be Dragons
 The version for MuseScore 2 will check that the staff is for a tin whistle and
-adjust the tab diagram position for the lowest note possible. As of June'19 this
-has not been possible for MuseScore 3 so the plugin just assumes that a whistle
-tuned to D is used - this being the most common. 
+adjust the tab diagram position for the lowest note possible.
 
-Once the Instrument type is made available to version 3 plugins in version 3.2
-then this can be fixed. The latest plug-in supports both the earlier default
-selection of a D whistle if you are not running v3.2 of MuseScore.
+Prior to MuseScore 3.2, the instrument type used on a staff can NOT be 
+detected. In this case the plugin will assume that a whistle tuned to D is 
+used - this being the most common whistle. 
+
+Also, circa June 2019, this plugin only supports grace notes that lead the main 
+note. Tabs for trailing grace notes will be rendered as leading notes which is 
+not what you want. In fact the trailing notes will be out of order. The next 
+release of MuseScore (following 3.2) will support the layout of both styles of 
+grace notes since the QML will then expose note types (including grace notes). 
+The current version of this plugin is ready to use when that is released. 
+Until then, best to stay away from trailing grace notes. The following image 
+shows what's possible after that release: 
+
+![Image of test cases for grace notes.](images/whistle-grace-note-test.png  "Image of test cases for grace notes.")
+
+Note that you'll see some minor issues with trailing grace note tab positioning. 
+The actual physical position of the grace notes is not available so a heuristic 
+approach (aka good 'ole human observation) is used to get a decent overall result 
+even though it's not perfect.
 
 ### Having problems?
 Note that this plugin relies on a font being installed, see the Installation
