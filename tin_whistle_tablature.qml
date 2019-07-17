@@ -20,7 +20,9 @@
 //  the file LICENCE.GPL
 //=============================================================================
 
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Dialogs 1.1
+
 import MuseScore 3.0
 
 MuseScore {
@@ -28,8 +30,25 @@ MuseScore {
    description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 
+   property var tabFontName: "Tin Whistle Tab"
+
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
    property variant tabs : ["d", "i", "e", "j", "f", "g", "h", "a", "n", "b", "m", "c", "D", "I", "E", "J", "F", "G", "H", "A", "N", "B", "M", "C", '\u00CE']
+
+   MessageDialog {
+      id: fontMissingDialog
+      icon: StandardIcon.Warning
+      standardButtons: StandardButton.Ok
+      title: "Missing Tin Whistle Tablature font!"
+      text: "The Tin Whistle Tab font is not installed on your device."
+      detailedText:  "You can download the font from the web here:\n\n" +
+         "https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip\n\n" +
+         "The Zip file contains the TinWhistleTab.ttf font file you need to install on your device.\n" +
+         "You will also need to restart MuseScore for it to recognize the new font."
+      onAccepted: {
+         Qt.quit()
+      }
+   }
 
    function selectTinTabCharacter (pitch, basePitch) {
       var tabText = ""
@@ -47,11 +66,11 @@ MuseScore {
    }
 
    function setTinTabCharacterFont (text, tabSize) {
-      text.fontFace = "Tin Whistle Tab"
+      text.fontFace = tabFontName
       text.fontSize = tabSize
       // Vertical align to top. (0 = top, 1 = center, 2 = bottom, 3 = baseline)
-      text.align = 0
-      // Set text to below the staff.
+      text.align = Align.TOP     // 'Align' available in MuseScore 3.3
+      // Place text to below the staff.
       text.placement = Placement.BELOW
       // Turn off note relative placement
       text.autoplace = false
@@ -68,12 +87,7 @@ MuseScore {
 //      console.log("^^ -------- " + title + " ---------- ^^")
 //   }
 
-   onRun: {
-      console.log("hello tin whistle tablature")
-
-      if (typeof curScore === 'undefined')
-         Qt.quit()
-
+   function renderTinWhistleTablature() {
       // select either the full score or just the selected staves
       var cursor = curScore.newCursor();
       var startStaff;
@@ -296,6 +310,19 @@ MuseScore {
             cursor.next()
          } // end while segment
       } // end for staff
+      Qt.quit()
+   }
+
+   onRun: {
+      console.log("Hello tin whistle tablature")
+
+      if (typeof curScore === 'undefined')
+         Qt.quit()
+
+      if (Qt.fontFamilies().indexOf("Tin Whistle Tab") >= 0)
+         renderTinWhistleTablature()
+      else
+         fontMissingDialog.open()
       Qt.quit()
    } // end onRun
 }
