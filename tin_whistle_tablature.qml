@@ -58,15 +58,15 @@ MuseScore {
    }
 
    // For diagnostic use.
-   function dumpObjectEntries (obj, showUndefinedVals, title) {
-      console.log("VV -------- " + title + " ---------- VV")
-      for (let [key, value] of Object.entries(obj)) {
-         if (showUndefinedVals || (value != null)) {
-            console.log(key + "=" + value);
-         }
-      }
-      console.log("^^ -------- " + title + " ---------- ^^")
-   }
+//   function dumpObjectEntries (obj, showUndefinedVals, title) {
+//      console.log("VV -------- " + title + " ---------- VV")
+//      for (let [key, value] of Object.entries(obj)) {
+//         if (showUndefinedVals || (value != null)) {
+//            console.log(key + "=" + value);
+//         }
+//      }
+//      console.log("^^ -------- " + title + " ---------- ^^")
+//   }
 
    onRun: {
       console.log("hello tin whistle tablature")
