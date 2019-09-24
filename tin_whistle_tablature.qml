@@ -20,16 +20,48 @@
 //  the file LICENCE.GPL
 //=============================================================================
 
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Dialogs 1.1
+
 import MuseScore 3.0
 
 MuseScore {
-   version: "3.0"
+   version: "3.3"
    description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 
+   property var tabFontName: "Tin Whistle Tab"
+   property var whistleFound: false
+
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
    property variant tabs : ["d", "i", "e", "j", "f", "g", "h", "a", "n", "b", "m", "c", "D", "I", "E", "J", "F", "G", "H", "A", "N", "B", "M", "C", '\u00CE']
+
+   MessageDialog {
+      id: fontMissingDialog
+      icon: StandardIcon.Warning
+      standardButtons: StandardButton.Ok
+      title: "Missing Tin Whistle Tablature font!"
+      text: "The Tin Whistle Tab font is not installed on your device."
+      detailedText:  "You can download the font from the web here:\n\n" +
+         "https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip\n\n" +
+         "The Zip file contains the TinWhistleTab.ttf font file you need to install on your device.\n" +
+         "You will also need to restart MuseScore for it to recognize the new font."
+      onAccepted: {
+         Qt.quit()
+      }
+   }
+
+   MessageDialog {
+      id: noWhistlesFound
+      icon: StandardIcon.Warning
+      standardButtons: StandardButton.Ok
+      title: "No Staffs use a Tin Whistle"
+      text: "No selected staff in the current score uses a tin whistle instrument.\n" +
+            "Use menu command \"Edit -> Instruments\" to select your instrument."
+      onAccepted: {
+         Qt.quit()
+      }
+   }
 
    function selectTinTabCharacter (pitch, basePitch) {
       var tabText = ""
@@ -47,33 +79,28 @@ MuseScore {
    }
 
    function setTinTabCharacterFont (text, tabSize) {
-      text.fontFace = "Tin Whistle Tab"
+      text.fontFace = tabFontName
       text.fontSize = tabSize
       // Vertical align to top. (0 = top, 1 = center, 2 = bottom, 3 = baseline)
-      text.align = 0
-      // Set text to below the staff.
+      text.align = 0             // 'Align.TOP' is available in MuseScore 3.3
+      // Place text to below the staff.
       text.placement = Placement.BELOW
       // Turn off note relative placement
       text.autoplace = false
    }
 
    // For diagnostic use.
-//   function dumpObjectEntries (obj, showUndefinedVals, title) {
-//      console.log("VV -------- " + title + " ---------- VV")
-//      for (let [key, value] of Object.entries(obj)) {
-//         if (showUndefinedVals || (value != null)) {
-//            console.log(key + "=" + value);
-//         }
-//      }
-//      console.log("^^ -------- " + title + " ---------- ^^")
-//   }
+   function dumpObjectEntries(obj, showUndefinedVals, title) {
+      console.log("VV -------- " + title + " ---------- VV")
+      for (var key in obj) {
+         if (showUndefinedVals || (obj[key] != null)) {
+            console.log(key + "=" + obj[key]);
+         }
+      }
+      console.log("^^ -------- " + title + " ---------- ^^")
+   }
 
-   onRun: {
-      console.log("hello tin whistle tablature")
-
-      if (typeof curScore === 'undefined')
-         Qt.quit()
-
+   function renderTinWhistleTablature() {
       // select either the full score or just the selected staves
       var cursor = curScore.newCursor();
       var startStaff;
@@ -119,27 +146,35 @@ MuseScore {
          if (instrument == "wind.flutes.whistle.tin") {
             basePitch = 72   // default is C tuning (even though D is the most common)
             tabOffsetY = -0.7
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.c") {
             basePitch = 72   // C tuning
             tabOffsetY = -0.7
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.bflat") {
             basePitch = 70   // B flat tuning
             tabOffsetY = -0.4
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.d") {
             basePitch = 74   // D tuning
             tabOffsetY = -1.0
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.common") {
             basePitch = 74   // D tuning (the most common)
             tabOffsetY = -1.0
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.eflat") {
             basePitch = 75   // E flat tuning
             tabOffsetY = -1.0
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
             tabOffsetY = -1.0
+            whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
             tabOffsetY = -1.0
+            whistleFound = true;
          } else {
             console.log("Skipped staff " + staff + " for instrumentId: " + instrument)
             continue
@@ -161,14 +196,14 @@ MuseScore {
          // Some positioning values used to render grace notes.
          // Note that these are determined by observation of the results
          // and appear to be consistent. It would be better to find the actual
-         // location of the grace notes but that capability isn't exposed at
-         // this time (circa MuseScore 3.2).
+         // location of the grace notes but that capability isn't exposed until
+         // version 3.3 of MuseScore. So for the earlier releases we use these
+         // heuristics.
          var graceNoteWidth = 1.2         // Assumed grace note width
          var graceNoteNudgeLeading = 0.0  // Assumed leading note cluster offset from main note
          var graceNoteNudgeTrailing = 3.0 // Assumed trailing note cluster offset from main note
 
          // TinWhistleTab.ttf character image font sizes.
-         // Note that these are determined by observation of the results.
          var tabFontSizeNormal = 35       // Size of normal sized whistle tab image
          var tabFontSizeGrace = 25        // Size of grace note sized whistle tab image
 
@@ -180,16 +215,21 @@ MuseScore {
                var leadingLifo = new Array();
                var trailingFifo = new Array();
                var graceChords = cursor.element.graceNotes;
+               // Determine if Element.posX and Element.posY is supported. (MuseScore 3.3+)
+               var hasElementPos = cursor.element.posX !== undefined;
+
+               // Build separate lists of leading and trailing grace note chords.
                if (graceChords.length > 0) {
-                  var hasNoteType = graceChords[0].notes[0].noteType !== undefined;
+                  // Determine if Note.noteType is supported. (MuseScore 3.2.1)
+                  var hasNoteType = graceChords[0].notes[0] !== undefined;
                   if (hasNoteType) {
                      for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
                         var noteType = graceChords[chordNum].notes[0].noteType
                         if (noteType == NoteType.GRACE8_AFTER || noteType == NoteType.GRACE16_AFTER ||
                               noteType == NoteType.GRACE32_AFTER) {
-                           trailingFifo.unshift(graceChords[chordNum].notes[0])
+                           trailingFifo.unshift(graceChords[chordNum])
                         } else {
-                           leadingLifo.push(graceChords[chordNum].notes[0])
+                           leadingLifo.push(graceChords[chordNum])
                         }
                      }
                   } else {
@@ -197,10 +237,9 @@ MuseScore {
                      // the NoteType capability doesn't exist in the running version of
                      // MuseScore.
                      for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
-                        leadingLifo.unshift(graceChords[chordNum].notes[0])
+                        leadingLifo.unshift(graceChords[chordNum])
                      }
                   }
-                  // Build separate lists of leading and trailing grace notes.
                }
 
                // First render leading grace notes if any exist...
@@ -209,19 +248,25 @@ MuseScore {
                   var graceLocationX = leadingLifo.length * -graceNoteWidth + graceNoteNudgeLeading;
                   for (var chordNum = 0; chordNum < leadingLifo.length; chordNum++) {
                      // there are no chords when playing the tin whistle
-                     var note = leadingLifo[chordNum];
-                     var pitch = note.pitch;
+                     var chord = leadingLifo[chordNum];
+                     var pitch = chord.notes[0].pitch;
 
                      text.text = selectTinTabCharacter(pitch, basePitch)
                      // Note: Set text attributes *after* adding element to the score.
                      cursor.add(text)
                      // grace notes are shown a bit smaller
                      setTinTabCharacterFont(text, tabFontSizeGrace)
-                     // there seems to be no way of knowing the exact horizontal pos.
-                     // of a grace note, so we have to guess:
-                     text.offsetX = graceLocationX
-                     // Move to the next note location.
-                     graceLocationX += graceNoteWidth;
+                     if (hasElementPos) {
+                        // X position the tab image under the grace note
+                        text.offsetX = chord.posX
+                     }
+                     else {
+                        // there seems to be no way of knowing the exact horizontal pos.
+                        // of a grace note, so we have to guess:
+                        text.offsetX = graceLocationX
+                        // Move to the next note location.
+                        graceLocationX += graceNoteWidth;
+                     }
                      // (See the note below about behavior of the text.offsetY property.)
                      text.offsetY = tabOffsetY   // place the tab below the staff
 
@@ -233,7 +278,8 @@ MuseScore {
                // Next process the parent note...
                if (cursor.element.notes[0].tieBack == null) {  // don't add tab if note is tied to previous note
                   // there are no chords when playing the tin whistle, so use first note
-                  var pitch = cursor.element.notes[0].pitch;
+                  var chord = cursor.element;
+                  var pitch = chord.notes[0].pitch;
                   text.text = selectTinTabCharacter(pitch, basePitch)
 
                   // NOTE - text.offsetY behavior oddity:
@@ -258,8 +304,11 @@ MuseScore {
                   // Next, setting text.offsetY will actually ADD the new value to the current value thereby
                   // acting as a numerical integrator.
                   text.offsetY = tabOffsetY
-                  // Nudge the hole pattern to be centered under the note.
-                  text.offsetX = 0.5
+                  // Place the whistle hole pattern to be centered under the note.
+                  if (hasElementPos)
+                     text.offsetX = chord.posX + 0.25
+                  else
+                     text.offsetX = 0.5
 
                   // Create new text element for next tab placement
                   text = newElement(Element.STAFF_TEXT)
@@ -272,19 +321,25 @@ MuseScore {
 
                   for (var chordNum = 0; chordNum < trailingFifo.length; chordNum++) {
                      // there are no chords when playing the tin whistle
-                     var note = trailingFifo[chordNum];
-                     var pitch = note.pitch;
+                     var chord = trailingFifo[chordNum];
+                     var pitch = chord.notes[0].pitch;
 
                      text.text = selectTinTabCharacter(pitch, basePitch)
                      // Note: Set text attributes *after* adding element to the score.
                      cursor.add(text)
                      // grace notes are shown a bit smaller
                      setTinTabCharacterFont(text, tabFontSizeGrace)
-                     // there seems to be no way of knowing the exact horizontal pos.
-                     // of a grace note, so we have to guess:
-                     text.offsetX = graceLocationX
-                     // Move to the next note location.
-                     graceLocationX += graceNoteWidth;
+                     if (hasElementPos) {
+                        // X position the tab image under the grace note
+                        text.offsetX = chord.posX
+                     }
+                     else {
+                        // there seems to be no way of knowing the exact horizontal pos.
+                        // of a grace note, so we have to guess:
+                        text.offsetX = graceLocationX
+                        // Move to the next note location.
+                        graceLocationX += graceNoteWidth;
+                     }
                      // (See the note below about behavior of the text.offsetY property.)
                      text.offsetY = tabOffsetY   // place the tab below the staff
 
@@ -296,6 +351,22 @@ MuseScore {
             cursor.next()
          } // end while segment
       } // end for staff
+      Qt.quit()
+   }
+
+   onRun: {
+      console.log("Hello tin whistle tablature")
+
+      if (typeof curScore === 'undefined')
+         Qt.quit()
+
+      if (Qt.fontFamilies().indexOf("Tin Whistle Tab") >= 0) {
+         renderTinWhistleTablature()
+         if (!whistleFound)
+            noWhistlesFound.open()
+      }
+      else
+         fontMissingDialog.open()
       Qt.quit()
    } // end onRun
 }

@@ -10,7 +10,7 @@ plugin will adjust the tab diagram position for the lowest note possible
 (currently D, C or Bb).
 
 See the "Here be Dragons" section of this document that discusses various
-limitations of MuseScore 3 releases.
+quirks related to early MuseScore 3 releases.
 
 ### Installation
 * If using MuseScore version 3 then download the [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip) and unzip it.
@@ -25,12 +25,12 @@ are using MuseScore version 2.x then use this [handbook](https://musescore.org/e
 to enable the plugin. Tick the box against 'tin\_whistle\_tablature' and apply
 with 'OK'.
 
-* This plugin relies on a font being installed, which is not included in this
-download but can be obtained from [Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip). To install the 
-font it is usually just a case of double-clicking the downloaded `.ttf` file 
-and agreeing to the install process. If that does not work then on linux
-systems try copying the TinWhistleTab.ttf font file to the 
-`/usr/share/fonts/truetype/` directory.
+* This plugin relies on a font being installed, which is not included in this download 
+but can be obtained from [Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip). If the font isn't installed you will be 
+presented with a message box telling you how to obtain the font. To install the 
+font, it is usually just a case of double-clicking the downloaded `.ttf` file and 
+agreeing to the install process. If that does not work then on linux systems try 
+copying the TinWhistleTab.ttf font file to the `/usr/share/fonts/truetype/` directory.
 
 ### Using the plugin
 The tabs will be added to the highlighted bars if you have made a selection,
@@ -76,25 +76,25 @@ MuseScore 2.x on a branch 'version2' and the other for Musecore 3.x on the
 The version for MuseScore 2 will check that the staff is for a tin whistle and
 adjust the tab diagram position for the lowest note possible.
 
-Prior to MuseScore 3.2, the instrument type used on a staff can NOT be 
-detected. In this case the plugin will assume that a whistle tuned to D is 
-used - this being the most common whistle. 
+Prior to MuseScore 3.2:
 
-Also, circa June 2019, this plugin only supports grace notes that lead the main 
-note. Tabs for trailing grace notes will be rendered as leading notes which is 
-not what you want. In fact the trailing notes will be out of order. The next 
-release of MuseScore (following 3.2) will support the layout of both styles of 
-grace notes since the QML will then expose note types (including grace notes). 
-The current version of this plugin is ready to use when that is released. 
-Until then, best to stay away from trailing grace notes. The following image 
-shows what's possible after that release: 
+* The instrument type used on a staff can NOT be detected. In this case the plugin will 
+assume that a whistle tuned to D is used - this being the most common whistle. 
+
+* This plugin only supports grace notes that lead the main note. Tabs for trailing grace 
+notes will be rendered as leading notes which is not what you want. In fact the trailing 
+notes will be out of order. 
+
+Prior to MuseScore 3.3:
+
+* You may see some minor issues with grace note tab positioning. The actual physical 
+position of the grace notes was not available before v3.3 so a heuristic approach 
+(aka good 'ole human observation) is used to get a decent overall result even though 
+it's not perfect.
+
+Here is an example of how the fingering tab images are accurately positioned in MuseScore 3.3+:
 
 ![Image of test cases for grace notes.](images/whistle-grace-note-test.png  "Image of test cases for grace notes.")
-
-Note that you'll see some minor issues with trailing grace note tab positioning. 
-The actual physical position of the grace notes is not available so a heuristic 
-approach (aka good 'ole human observation) is used to get a decent overall result 
-even though it's not perfect.
 
 ### Having problems?
 Note that this plugin relies on a font being installed, see the Installation
