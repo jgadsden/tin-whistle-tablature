@@ -84,6 +84,8 @@ MuseScore {
 
       // walk through the score for each (tin whistle) staff
       var basePitch
+      var pitch
+      var lastPitch = 0
       var tabOffsetY   // according to the lowest note for the type of whistle
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
@@ -138,7 +140,7 @@ MuseScore {
                var graceChords = cursor.element.graceNotes
                if (graceChords.length > 0) {
                   // there are no chords when playing the tin whistle
-                  var pitch = graceChords[0].notes[0].pitch
+                  pitch = graceChords[0].notes[0].pitch
                   // grace notes are shown a bit smaller
                   text.text = selectTab(pitch, basePitch, 25) 
                   // there seems to be no way of knowing the exact horizontal pos.
@@ -151,12 +153,16 @@ MuseScore {
                }
                
                // don't add tab if note is tied to previous note
-               if(cursor.element.notes[0].tieBack == null) {
-                   // there are no chords when playing the tin whistle, so use first note
-                  var pitch = cursor.element.notes[0].pitch
-                  text.text = selectTab(pitch, basePitch, 35)
-                  text.pos.y = tabOffsetY   // place the tab below the staff
-                  cursor.add(text)
+               if (cursor.element.notes[0].tieBack == null) {
+                  pitch = cursor.element.notes[0].pitch
+                  // don't add tab if it is a repeated note
+                  if  (pitch != lastPitch) {
+                     text.text = selectTab(pitch, basePitch, 35)
+                     // place the tab below the staff
+                     text.pos.y = tabOffsetY
+                     cursor.add(text)
+                     lastPitch = pitch
+                  }
                }
             } // end if CHORD
             cursor.next()
