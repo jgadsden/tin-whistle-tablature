@@ -67,11 +67,11 @@ MuseScore {
       var tabText = ""
       var index = pitch - basePitch
       if (index < 0) {
-         console.log("Skipped note as it was too low : " + pitch)
+         console.log("Skipped note as it was too low, pitch : " + pitch)
          return tabText
       }
       if (index > 24) {
-         console.log("Skipped note as it was too high, index : " + pitch)
+         console.log("Skipped note as it was too high, pitch : " + pitch)
          return tabText
       }
       tabText = tabs[index]
@@ -130,6 +130,8 @@ MuseScore {
 
       // walk through the score for each (tin whistle) staff
       var basePitch
+      var pitch
+      var lastPitch = 0
       var tabOffsetY   // according to the lowest note for the type of whistle
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
@@ -182,7 +184,7 @@ MuseScore {
          console.log("Staff " + staff + " whistle type: " + instrument)
 
          if (curScore.hasLyrics) {
-            tabOffsetY += 2.5   // try not to clash with any lyrics
+            tabOffsetY += 2.8   // try not to clash with any lyrics
          }
 
          // Musescore supports up to 4 voices, but tin whistle uses only one
@@ -249,7 +251,9 @@ MuseScore {
                   for (var chordNum = 0; chordNum < leadingLifo.length; chordNum++) {
                      // there are no chords when playing the tin whistle
                      var chord = leadingLifo[chordNum];
-                     var pitch = chord.notes[0].pitch;
+                     pitch = chord.notes[0].pitch;
+                     // keep track of repeated notes
+                     lastPitch = pitch
 
                      text.text = selectTinTabCharacter(pitch, basePitch)
                      // Note: Set text attributes *after* adding element to the score.
@@ -276,43 +280,56 @@ MuseScore {
                }
 
                // Next process the parent note...
-               if (cursor.element.notes[0].tieBack == null) {  // don't add tab if note is tied to previous note
+               if (cursor.element.notes[0].tieBack != null) {
+                  // don't add tab if parent note is tied to previous note
+                  console.log("Skipped tied parent note, pitches : " + pitch + ", " + lastPitch)
+               }
+               else {
                   // there are no chords when playing the tin whistle, so use first note
                   var chord = cursor.element;
-                  var pitch = chord.notes[0].pitch;
-                  text.text = selectTinTabCharacter(pitch, basePitch)
+                  pitch = chord.notes[0].pitch;
 
-                  // NOTE - text.offsetY behavior oddity:
-                  // When you cursor.add() a staff text element to the current cursor
-                  // location after changing its placement to "below", the text.offsetY
-                  // value is replaced by the UI menu "Format/Style.../Staff Text" value
-                  // specified for the "below" placement. Thereafter any values set to
-                  // text.offsetY are now ADDED to the current value making it grow larger
-                  // with every assignment.
+                  if (pitch == lastPitch) {
+                     // don't add tab if parent note is same pitch as previous note
+                     console.log("Skipped repeated parent note, pitches : " + pitch + ", " + lastPitch)
+                  }
+                  else {
+                     // keep track of repeated notes
+                     lastPitch = pitch
 
-                  // -- more explicitly --
-                  // Prior to the cursor.add() the text.offsetY value will contain
-                  // the "Format/Style.../Staff Text" value
-                  // for placement "above".
-                  cursor.add(text)      // Add the staff text at the cursor
-                  // Set text attributes *after* adding element to the score.
-                  setTinTabCharacterFont(text, tabFontSizeNormal)
-                  // At this point the text.offsetY value will contain the
-                  // "Format/Style.../Staff Text" value for "below" regardless of what
-                  // its previous value was.
-                  // -
-                  // Next, setting text.offsetY will actually ADD the new value to the current value thereby
-                  // acting as a numerical integrator.
-                  text.offsetY = tabOffsetY
-                  // Place the whistle hole pattern to be centered under the note.
-                  if (hasElementPos)
-                     text.offsetX = chord.posX + 0.25
-                  else
-                     text.offsetX = 0.5
+                     text.text = selectTinTabCharacter(pitch, basePitch)
+                     // NOTE - text.offsetY behavior oddity:
+                     // When you cursor.add() a staff text element to the current cursor
+                     // location after changing its placement to "below", the text.offsetY
+                     // value is replaced by the UI menu "Format/Style.../Staff Text" value
+                     // specified for the "below" placement. Thereafter any values set to
+                     // text.offsetY are now ADDED to the current value making it grow larger
+                     // with every assignment.
 
-                  // Create new text element for next tab placement
-                  text = newElement(Element.STAFF_TEXT)
-               }
+                     // -- more explicitly --
+                     // Prior to the cursor.add() the text.offsetY value will contain
+                     // the "Format/Style.../Staff Text" value
+                     // for placement "above".
+                     cursor.add(text)      // Add the staff text at the cursor
+                     // Set text attributes *after* adding element to the score.
+                     setTinTabCharacterFont(text, tabFontSizeNormal)
+                     // At this point the text.offsetY value will contain the
+                     // "Format/Style.../Staff Text" value for "below" regardless of what
+                     // its previous value was.
+                     // -
+                     // Next, setting text.offsetY will actually ADD the new value
+                     // to the current value thereby acting as a numerical integrator.
+                     text.offsetY = tabOffsetY
+                     // Place the whistle hole pattern to be centered under the note.
+                     if (hasElementPos)
+                        text.offsetX = chord.posX + 0.25
+                     else
+                        text.offsetX = 0.5
+
+                     // Create new text element for next tab placement
+                     text = newElement(Element.STAFF_TEXT)
+                  } // end if repeated
+               } // end if tied back
 
                // Finally process trailing grace notes if any exist...
                if (trailingFifo.length > 0) {
@@ -322,7 +339,9 @@ MuseScore {
                   for (var chordNum = 0; chordNum < trailingFifo.length; chordNum++) {
                      // there are no chords when playing the tin whistle
                      var chord = trailingFifo[chordNum];
-                     var pitch = chord.notes[0].pitch;
+                     pitch = chord.notes[0].pitch;
+                     // keep track of repeated notes
+                     lastPitch = pitch
 
                      text.text = selectTinTabCharacter(pitch, basePitch)
                      // Note: Set text attributes *after* adding element to the score.
