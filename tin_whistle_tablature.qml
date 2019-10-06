@@ -120,6 +120,9 @@ MuseScore {
          }
          console.log("Staff " + staff + " whistle type: " + instrument)
          
+         // new staff, so reset repeated note check
+         lastPitch = 0
+         
          if (curScore.hasLyrics) {
             tabOffsetY += 3   // try not to clash with any lyrics
          }
