@@ -183,6 +183,9 @@ MuseScore {
          }
          console.log("Staff " + staff + " whistle type: " + instrument)
 
+         // staff is for tin whistle, so init repeated note check
+         lastPitch = 0
+
          if (curScore.hasLyrics) {
             tabOffsetY += 2.8   // try not to clash with any lyrics
          }
