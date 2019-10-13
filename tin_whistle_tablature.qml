@@ -114,6 +114,15 @@ MuseScore {
          } else if (instrument == "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
             tabOffsetY = 10
+         } else if (instrument == "wind.flutes.whistle.low.d") {
+            basePitch = 62   // D tuning for low whistle
+            tabOffsetY = 13
+         } else if (instrument == "wind.flutes.whistle.low.f") {
+            basePitch = 65   // F tuning for low whistle
+            tabOffsetY = 12
+         } else if (instrument == "wind.flutes.whistle.low.g") {
+            basePitch = 67   // G tuning for low whistle
+            tabOffsetY = 11.5
          } else {
             console.log("Skipped staff " + staff + " for instrument: " + instrument)
             continue
