@@ -177,6 +177,18 @@ MuseScore {
             basePitch = 79   // G tuning
             tabOffsetY = -1.0
             whistleFound = true;
+         } else if (instrument == "wind.flutes.whistle.low.d") {
+            basePitch = 62   // D tuning for low whistle
+            tabOffsetY = 1.6
+            whistleFound = true;
+         } else if (instrument == "wind.flutes.whistle.low.f") {
+            basePitch = 65   // F tuning for low whistle
+            tabOffsetY = 0.9
+            whistleFound = true;
+         } else if (instrument == "wind.flutes.whistle.low.g") {
+            basePitch = 67   // G tuning for low whistle
+            tabOffsetY = 0.0
+            whistleFound = true;
          } else {
             console.log("Skipped staff " + staff + " for instrumentId: " + instrument)
             continue
