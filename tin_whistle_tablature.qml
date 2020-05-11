@@ -147,47 +147,47 @@ MuseScore {
 
          if (instrument == "wind.flutes.whistle.tin") {
             basePitch = 72   // default is C tuning (even though D is the most common)
-            tabOffsetY = -0.7
+            tabOffsetY = 3.3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.c") {
             basePitch = 72   // C tuning
-            tabOffsetY = -0.7
+            tabOffsetY = 3.3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.bflat") {
             basePitch = 70   // B flat tuning
-            tabOffsetY = -0.4
+            tabOffsetY = 3.6
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.d") {
             basePitch = 74   // D tuning
-            tabOffsetY = -1.0
+            tabOffsetY = 3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.common") {
             basePitch = 74   // D tuning (the most common)
-            tabOffsetY = -1.0
+            tabOffsetY = 3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.eflat") {
             basePitch = 75   // E flat tuning
-            tabOffsetY = -1.0
+            tabOffsetY = 3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
-            tabOffsetY = -1.0
+            tabOffsetY = 3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
-            tabOffsetY = -1.0
+            tabOffsetY = 3
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.low.d") {
             basePitch = 62   // D tuning for low whistle
-            tabOffsetY = 1.6
+            tabOffsetY = 5.6
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.low.f") {
             basePitch = 65   // F tuning for low whistle
-            tabOffsetY = 0.9
+            tabOffsetY = 4.9
             whistleFound = true;
          } else if (instrument == "wind.flutes.whistle.low.g") {
             basePitch = 67   // G tuning for low whistle
-            tabOffsetY = 0.0
+            tabOffsetY = 4.0
             whistleFound = true;
          } else {
             console.log("Skipped staff " + staff + " for instrumentId: " + instrument)
