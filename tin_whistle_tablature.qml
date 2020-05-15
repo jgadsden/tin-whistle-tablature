@@ -26,7 +26,7 @@ import QtQuick.Dialogs 1.1
 import MuseScore 3.0
 
 MuseScore {
-   version: "3.3"
+   version: "3.4"
    description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 
@@ -45,7 +45,9 @@ MuseScore {
       detailedText:  "You can download the font from the web here:\n\n" +
          "https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip\n\n" +
          "The Zip file contains the TinWhistleTab.ttf font file you need to install on your device.\n" +
-         "You will also need to restart MuseScore for it to recognize the new font."
+         "If you are running Windows 10 you must install the font for \"all users\".\n" +
+         "This is due to a quirk in the QT framework that MuseScore uses to implement the program.\n" +
+         "Note that you will also need to restart MuseScore for it to recognize the new font."
       onAccepted: {
          Qt.quit()
       }

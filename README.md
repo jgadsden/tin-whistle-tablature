@@ -25,12 +25,22 @@ are using MuseScore version 2.x then use this [handbook](https://musescore.org/e
 to enable the plugin. Tick the box against 'tin\_whistle\_tablature' and apply
 with 'OK'.
 
-* This plugin relies on a font being installed, which is not included in this download 
-but can be obtained from [Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip). If the font isn't installed you will be 
-presented with a message box telling you how to obtain the font. To install the 
-font, it is usually just a case of double-clicking the downloaded `.ttf` file and 
-agreeing to the install process. If that does not work then on linux systems try 
-copying the TinWhistleTab.ttf font file to the `/usr/share/fonts/truetype/` directory.
+* This plugin relies on a tin whistle tablature font being installed. Note that the 
+font is not included in this download but can be obtained from 
+[Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip). 
+If the font isn't installed you will be presented with a message box telling you 
+how to obtain the font. To install the font, it is usually just a case of double-clicking 
+the downloaded `.ttf` file and agreeing to the install process. If that does not work then 
+on linux systems try copying the TinWhistleTab.ttf font file to the `/usr/share/fonts/truetype/` directory.
+However, if you are installing the font on a Windows 10 system you will need to ensure you install the font
+for "all users". You can do this by right clicking on the file and selecting "Install for all users"
+as illustrated here:
+
+ ![Image of installing font for all users](images/win10-tintab-font-install.png  "Win10 Installing font for all users")
+
+ For more information on this Windows 10 font problem and solutions see issue
+ [musescore/MuseScore#6084](https://github.com/musescore/MuseScore/pull/6084) and
+ [how-to-force-win10-to-install-fonts-in-c-windows-fonts](https://stackoverflow.com/questions/55264642/how-to-force-win10-to-install-fonts-in-c-windows-fonts).
 
 ### Using the plugin
 The tabs will be added to the highlighted bars if you have made a selection,
