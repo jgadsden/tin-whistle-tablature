@@ -1,5 +1,5 @@
 # tin-whistle-tablature
-MuseScore plugin to add tablature / finger diagrams to a tin whistle staff in a score
+[MuseScore plugin](https://musescore.org/en/project/tin-whistle-tablature) to add tablature / finger diagrams to a tin whistle staff in a score
 
 ### Introduction
 This provides a plugin to automatically add fingering / tab diagrams to the
@@ -13,9 +13,11 @@ See the "Here be Dragons" section of this document that discusses various
 quirks related to early MuseScore 3 releases.
 
 ### Installation
-* If using MuseScore version 3 then download the [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/main.zip) and unzip it.
+* If using MuseScore version 3.4 then download the [plugin](https://musescore.org/sites/musescore.org/files/2020-06/tin-whistle-tablature-3.4.zip) and unzip it.
 
-* Alternatively if using the older version 2 then download this [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip).
+* If using MuseScore version 3.3 or earlier then download the [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-master.zip) and unzip it.
+
+* Alternatively if using the older version 2 then download this [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-version2.zip).
 
 * Install using the [instructions](https://musescore.org/en/handbook/3/plugins#installation) in the MuseScore 3.x Handbook, which typically 
 involves copying the QML file to the local MuseScore Plugin directory. If you 
