@@ -13,7 +13,7 @@ See the "Here be Dragons" section of this document that discusses various
 quirks related to early MuseScore 3 releases.
 
 ### Installation
-* If using MuseScore version 3 then download the [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip) and unzip it.
+* If using MuseScore version 3 then download the [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/main.zip) and unzip it.
 
 * Alternatively if using the older version 2 then download this [plugin](https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip).
 
@@ -67,10 +67,10 @@ Issues: https://github.com/jgadsden/tin-whistle-tablature/issues
 
 MuseScore issue tracker: https://musescore.org/en/project/issues/TinWhistleTablature
 
-License: https://github.com/jgadsden/tin-whistle-tablature/blob/master/LICENSE
+License: https://github.com/jgadsden/tin-whistle-tablature/blob/main/LICENSE
 
 Download version 3 plugin from:
-https://github.com/jgadsden/tin-whistle-tablature/archive/master.zip
+https://github.com/jgadsden/tin-whistle-tablature/archive/main.zip
 
 Download the older version 2 plugin from:
 https://github.com/jgadsden/tin-whistle-tablature/archive/version2.zip
@@ -79,7 +79,7 @@ Code repository: https://github.com/jgadsden/tin-whistle-tablature/
 
 There are two branches for this plugin in the code repository: one for
 MuseScore 2.x on a branch 'version2' and the other for Musecore 3.x on the
-'master' branch.
+'main' branch.
 
 
 ### Here be Dragons
