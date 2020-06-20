@@ -13,11 +13,11 @@ See the "Here be Dragons" section of this document that discusses various
 quirks related to early MuseScore 3 releases.
 
 ### Installation
-* If using MuseScore version 3.4 then download the [plugin](https://musescore.org/sites/musescore.org/files/2020-06/tin-whistle-tablature-3.4.zip) and unzip it.
+* If using MuseScore 3 (version 3.4 or later) then download the [plugin](https://musescore.org/sites/musescore.org/files/2020-06/tin-whistle-tablature-3.4.zip) and unzip it.
 
-* If using MuseScore version 3.3 or earlier then download the [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-master.zip) and unzip it.
+* If using MuseScore version 3.3 or earlier then download this [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-master.zip).
 
-* Alternatively if using the older version 2 then download this [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-version2.zip).
+* Alternatively if using the older MuseScore version 2 then download this [plugin](https://musescore.org/sites/musescore.org/files/2019-10/tin-whistle-tablature-version2.zip).
 
 * Install using the [instructions](https://musescore.org/en/handbook/3/plugins#installation) in the MuseScore 3.x Handbook, which typically 
 involves copying the QML file to the local MuseScore Plugin directory. If you 
