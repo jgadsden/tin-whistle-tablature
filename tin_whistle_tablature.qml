@@ -149,7 +149,8 @@ MuseScore {
             instrument = "wind.flutes.whistle.tin.d"
          }
 
-         if (instrument == "wind.flutes.whistle.tin") {
+         // MuseScore 3 returned the MusicXML instrument ID, MuseScore 4 returns its own instrument ID
+         if (instrument == "wind.flutes.whistle.tin" || instrument === "c-tin-whistle") {
             basePitch = 72   // default is C tuning (even though D is the most common)
             tabOffsetY = 3.3
             whistleFound = true;
@@ -157,11 +158,11 @@ MuseScore {
             basePitch = 72   // C tuning
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.bflat") {
+         } else if (instrument == "wind.flutes.whistle.tin.bflat" || instrument === "bflat-tin-whistle") {
             basePitch = 70   // B flat tuning
             tabOffsetY = 3.6
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.d") {
+         } else if (instrument == "wind.flutes.whistle.tin.d" || instrument === "d-tin-whistle") {
             basePitch = 74   // D tuning
             tabOffsetY = 3
             whistleFound = true;
