@@ -138,9 +138,9 @@ MuseScore {
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
          var instrument;
-         var hasInstrumentId = curScore.parts[staff].instrumentId !== undefined;
+         var hasInstrumentId = curScore.staves[staff].part.instrumentId !== undefined;
          if (hasInstrumentId) {
-            instrument = curScore.parts[staff].instrumentId
+            instrument = curScore.staves[staff].part.instrumentId
          } else {
             // Assume a D whistle if currently running MuseScore version is missing
             // the instrumentId property.
