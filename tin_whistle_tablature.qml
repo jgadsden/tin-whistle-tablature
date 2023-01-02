@@ -49,7 +49,7 @@ MuseScore {
          "This is due to a quirk in the QT framework that MuseScore uses to implement the program.\n" +
          "Note that you will also need to restart MuseScore for it to recognize the new font."
       onAccepted: {
-         Qt.quit()
+         quit()
       }
    }
 
@@ -61,7 +61,7 @@ MuseScore {
       text: "No selected staff in the current score uses a tin whistle instrument.\n" +
             "Use menu command \"Edit -> Instruments\" to select your instrument."
       onAccepted: {
-         Qt.quit()
+         quit()
       }
    }
 
@@ -387,14 +387,14 @@ MuseScore {
             cursor.next()
          } // end while segment
       } // end for staff
-      Qt.quit()
+      quit()
    }
 
    onRun: {
       console.log("Hello tin whistle tablature")
 
       if (typeof curScore === 'undefined')
-         Qt.quit()
+         quit()
 
       if (Qt.fontFamilies().indexOf("Tin Whistle Tab") >= 0) {
          renderTinWhistleTablature()
@@ -403,6 +403,6 @@ MuseScore {
       }
       else
          fontMissingDialog.open()
-      Qt.quit()
+      quit()
    } // end onRun
 }
