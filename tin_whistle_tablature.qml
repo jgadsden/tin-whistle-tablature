@@ -103,6 +103,8 @@ MuseScore {
    }
 
    function renderTinWhistleTablature() {
+      curScore.startCmd();
+
       // select either the full score or just the selected staves
       var cursor = curScore.newCursor();
       var startStaff;
@@ -387,6 +389,8 @@ MuseScore {
             cursor.next()
          } // end while segment
       } // end for staff
+
+      curScore.endCmd();
       quit()
    }
 
