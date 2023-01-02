@@ -30,8 +30,8 @@ MuseScore {
    description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
    menuPath: "Plugins.Tin Whistle.Add tablature"
 
-   property var tabFontName: "Tin Whistle Tab"
-   property var whistleFound: false
+   property string tabFontName: "Tin Whistle Tab"
+   property bool whistleFound: false
 
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
    property variant tabs : ["d", "i", "e", "j", "f", "g", "h", "a", "n", "b", "m", "c", "D", "I", "E", "J", "F", "G", "H", "A", "N", "B", "M", "C", '\u00CE']
@@ -95,7 +95,7 @@ MuseScore {
    function dumpObjectEntries(obj, showUndefinedVals, title) {
       console.log("VV -------- " + title + " ---------- VV")
       for (var key in obj) {
-         if (showUndefinedVals || (obj[key] != null)) {
+         if (showUndefinedVals || (obj[key])) {
             console.log(key + "=" + obj[key]);
          }
       }
@@ -120,7 +120,7 @@ MuseScore {
       } else {
          startStaff = cursor.staffIdx
          cursor.rewind(2)
-         if (cursor.tick == 0) {
+         if (cursor.tick === 0) {
             // when the selection includes the last measure of the score:
             // rewind(2) goes behind the last segment (where there's none)
             // and sets tick=0. Need to fix up tick
@@ -150,47 +150,47 @@ MuseScore {
          }
 
          // MuseScore 3 returned the MusicXML instrument ID, MuseScore 4 returns its own instrument ID
-         if (instrument == "wind.flutes.whistle.tin" || instrument === "c-tin-whistle") {
+         if (instrument === "wind.flutes.whistle.tin" || instrument === "c-tin-whistle") {
             basePitch = 72   // default is C tuning (even though D is the most common)
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.c") {
+         } else if (instrument === "wind.flutes.whistle.tin.c") {
             basePitch = 72   // C tuning
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.bflat" || instrument === "bflat-tin-whistle") {
+         } else if (instrument === "wind.flutes.whistle.tin.bflat" || instrument === "bflat-tin-whistle") {
             basePitch = 70   // B flat tuning
             tabOffsetY = 3.6
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.d" || instrument === "d-tin-whistle") {
+         } else if (instrument === "wind.flutes.whistle.tin.d" || instrument === "d-tin-whistle") {
             basePitch = 74   // D tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.common") {
+         } else if (instrument === "wind.flutes.whistle.tin.common") {
             basePitch = 74   // D tuning (the most common)
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.eflat") {
+         } else if (instrument === "wind.flutes.whistle.tin.eflat") {
             basePitch = 75   // E flat tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.f") {
+         } else if (instrument === "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.g") {
+         } else if (instrument === "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.d") {
+         } else if (instrument === "wind.flutes.whistle.low.d") {
             basePitch = 62   // D tuning for low whistle
             tabOffsetY = 5.6
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.f") {
+         } else if (instrument === "wind.flutes.whistle.low.f") {
             basePitch = 65   // F tuning for low whistle
             tabOffsetY = 4.9
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.g") {
+         } else if (instrument === "wind.flutes.whistle.low.g") {
             basePitch = 67   // G tuning for low whistle
             tabOffsetY = 4.0
             whistleFound = true;
@@ -230,12 +230,12 @@ MuseScore {
          var tabFontSizeGrace = 25        // Size of grace note sized whistle tab image
 
          while (cursor.segment && (fullScore || cursor.tick < endTick)) {
-            if (cursor.element && cursor.element.type == Element.CHORD) {
+            if (cursor.element && cursor.element.type === Element.CHORD) {
                var text = newElement(Element.STAFF_TEXT);
 
                // Scan grace notes for existence and add to appropriate lists...
-               var leadingLifo = new Array();
-               var trailingFifo = new Array();
+               var leadingLifo = [];
+               var trailingFifo = [];
                var graceChords = cursor.element.graceNotes;
                // Determine if Element.posX and Element.posY is supported. (MuseScore 3.3+)
                var hasElementPos = cursor.element.posX !== undefined;
@@ -247,8 +247,8 @@ MuseScore {
                   if (hasNoteType) {
                      for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
                         var noteType = graceChords[chordNum].notes[0].noteType
-                        if (noteType == NoteType.GRACE8_AFTER || noteType == NoteType.GRACE16_AFTER ||
-                              noteType == NoteType.GRACE32_AFTER) {
+                        if (noteType === NoteType.GRACE8_AFTER || noteType === NoteType.GRACE16_AFTER ||
+                              noteType === NoteType.GRACE32_AFTER) {
                            trailingFifo.unshift(graceChords[chordNum])
                         } else {
                            leadingLifo.push(graceChords[chordNum])
@@ -300,7 +300,7 @@ MuseScore {
                }
 
                // Next process the parent note...
-               if (cursor.element.notes[0].tieBack != null) {
+               if (cursor.element.notes[0].tieBack) {
                   // don't add tab if parent note is tied to previous note
                   console.log("Skipped tied parent note, pitches : " + pitch + ", " + lastPitch)
                }
@@ -309,7 +309,7 @@ MuseScore {
                   var chord = cursor.element;
                   pitch = chord.notes[0].pitch;
 
-                  if (pitch == lastPitch) {
+                  if (pitch === lastPitch) {
                      // don't add tab if parent note is same pitch as previous note
                      console.log("Skipped repeated parent note, pitches : " + pitch + ", " + lastPitch)
                   }
