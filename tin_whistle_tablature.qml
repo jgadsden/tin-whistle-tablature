@@ -17,21 +17,22 @@
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License version 2
 //  as published by the Free Software Foundation and appearing in
-//  the file LICENCE.GPL
+//  the file LICENCE
 //=============================================================================
 
-import QtQuick 2.2
-import QtQuick.Dialogs 1.1
+import QtQuick 2.15
+import QtQuick.Dialogs 1.3
 
 import MuseScore 3.0
 
 MuseScore {
-   version: "3.4"
-   description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
-   menuPath: "Plugins.Tin Whistle.Add tablature"
+   version: "4.0"
+   description: "This plugin provides fingering diagrams for the tin whistles, requires `TinWhistleTab.ttf` font"
+   title: "Tin Whistle Tablature"
+   categoryCode: "composing-arranging-tools"
 
-   property var tabFontName: "Tin Whistle Tab"
-   property var whistleFound: false
+   property string tabFontName: "Tin Whistle Tab"
+   property bool whistleFound: false
 
    // The notes from the "Tin Whistle Tab" font, using key of D as standard
    property variant tabs : ["d", "i", "e", "j", "f", "g", "h", "a", "n", "b", "m", "c", "D", "I", "E", "J", "F", "G", "H", "A", "N", "B", "M", "C", '\u00CE']
@@ -49,7 +50,7 @@ MuseScore {
          "This is due to a quirk in the QT framework that MuseScore uses to implement the program.\n" +
          "Note that you will also need to restart MuseScore for it to recognize the new font."
       onAccepted: {
-         Qt.quit()
+         quit()
       }
    }
 
@@ -59,9 +60,9 @@ MuseScore {
       standardButtons: StandardButton.Ok
       title: "No Staffs use a Tin Whistle"
       text: "No selected staff in the current score uses a tin whistle instrument.\n" +
-            "Use menu command \"Edit -> Instruments\" to select your instrument."
+            "Use menu command \"View -> Instruments\" to select instruments"
       onAccepted: {
-         Qt.quit()
+         quit()
       }
    }
 
@@ -78,7 +79,7 @@ MuseScore {
       }
       tabText = tabs[index]
       return tabText
-   }
+   } // end selectTinTabCharacter
 
    function setTinTabCharacterFont (text, tabSize) {
       text.fontFace = tabFontName
@@ -89,20 +90,22 @@ MuseScore {
       text.placement = Placement.BELOW
       // Turn off note relative placement
       text.autoplace = false
-   }
+   } // end setTinTabCharacterFont
 
    // For diagnostic use.
-   function dumpObjectEntries(obj, showUndefinedVals, title) {
+   function dumpObjectEntries (obj, showUndefinedVals, title) {
       console.log("VV -------- " + title + " ---------- VV")
       for (var key in obj) {
-         if (showUndefinedVals || (obj[key] != null)) {
+         if (showUndefinedVals || (obj[key])) {
             console.log(key + "=" + obj[key]);
          }
       }
       console.log("^^ -------- " + title + " ---------- ^^")
-   }
+   } // end dumpObjectEntries
 
-   function renderTinWhistleTablature() {
+   function renderTinWhistleTablature () {
+      curScore.startCmd();
+
       // select either the full score or just the selected staves
       var cursor = curScore.newCursor();
       var startStaff;
@@ -118,7 +121,7 @@ MuseScore {
       } else {
          startStaff = cursor.staffIdx
          cursor.rewind(2)
-         if (cursor.tick == 0) {
+         if (cursor.tick === 0) {
             // when the selection includes the last measure of the score:
             // rewind(2) goes behind the last segment (where there's none)
             // and sets tick=0. Need to fix up tick
@@ -138,56 +141,57 @@ MuseScore {
       for (var staff = startStaff; staff <= endStaff; staff++) {
          // check that it is for a tin whistle
          var instrument;
-         var hasInstrumentId = curScore.parts[staff].instrumentId !== undefined;
+         var hasInstrumentId = curScore.staves[staff].part.instrumentId !== undefined;
          if (hasInstrumentId) {
-            instrument = curScore.parts[staff].instrumentId
+            instrument = curScore.staves[staff].part.instrumentId
          } else {
             // Assume a D whistle if currently running MuseScore version is missing
             // the instrumentId property.
             instrument = "wind.flutes.whistle.tin.d"
          }
 
-         if (instrument == "wind.flutes.whistle.tin") {
+         // MuseScore 3 returned the MusicXML instrument ID, MuseScore 4 returns its own instrument ID
+         if (instrument === "wind.flutes.whistle.tin" || instrument === "c-tin-whistle") {
             basePitch = 72   // default is C tuning (even though D is the most common)
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.c") {
+         } else if (instrument === "wind.flutes.whistle.tin.c") {
             basePitch = 72   // C tuning
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.bflat") {
+         } else if (instrument === "wind.flutes.whistle.tin.bflat" || instrument === "bflat-tin-whistle") {
             basePitch = 70   // B flat tuning
             tabOffsetY = 3.6
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.d") {
+         } else if (instrument === "wind.flutes.whistle.tin.d" || instrument === "d-tin-whistle") {
             basePitch = 74   // D tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.common") {
+         } else if (instrument === "wind.flutes.whistle.tin.common") {
             basePitch = 74   // D tuning (the most common)
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.eflat") {
+         } else if (instrument === "wind.flutes.whistle.tin.eflat") {
             basePitch = 75   // E flat tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.f") {
+         } else if (instrument === "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.tin.g") {
+         } else if (instrument === "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.d") {
+         } else if (instrument === "wind.flutes.whistle.low.d") {
             basePitch = 62   // D tuning for low whistle
             tabOffsetY = 5.6
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.f") {
+         } else if (instrument === "wind.flutes.whistle.low.f") {
             basePitch = 65   // F tuning for low whistle
             tabOffsetY = 4.9
             whistleFound = true;
-         } else if (instrument == "wind.flutes.whistle.low.g") {
+         } else if (instrument === "wind.flutes.whistle.low.g") {
             basePitch = 67   // G tuning for low whistle
             tabOffsetY = 4.0
             whistleFound = true;
@@ -227,12 +231,12 @@ MuseScore {
          var tabFontSizeGrace = 25        // Size of grace note sized whistle tab image
 
          while (cursor.segment && (fullScore || cursor.tick < endTick)) {
-            if (cursor.element && cursor.element.type == Element.CHORD) {
+            if (cursor.element && cursor.element.type === Element.CHORD) {
                var text = newElement(Element.STAFF_TEXT);
 
                // Scan grace notes for existence and add to appropriate lists...
-               var leadingLifo = new Array();
-               var trailingFifo = new Array();
+               var leadingLifo = [];
+               var trailingFifo = [];
                var graceChords = cursor.element.graceNotes;
                // Determine if Element.posX and Element.posY is supported. (MuseScore 3.3+)
                var hasElementPos = cursor.element.posX !== undefined;
@@ -244,8 +248,8 @@ MuseScore {
                   if (hasNoteType) {
                      for (var chordNum = 0; chordNum < graceChords.length; chordNum++) {
                         var noteType = graceChords[chordNum].notes[0].noteType
-                        if (noteType == NoteType.GRACE8_AFTER || noteType == NoteType.GRACE16_AFTER ||
-                              noteType == NoteType.GRACE32_AFTER) {
+                        if (noteType === NoteType.GRACE8_AFTER || noteType === NoteType.GRACE16_AFTER ||
+                              noteType === NoteType.GRACE32_AFTER) {
                            trailingFifo.unshift(graceChords[chordNum])
                         } else {
                            leadingLifo.push(graceChords[chordNum])
@@ -297,7 +301,7 @@ MuseScore {
                }
 
                // Next process the parent note...
-               if (cursor.element.notes[0].tieBack != null) {
+               if (cursor.element.notes[0].tieBack) {
                   // don't add tab if parent note is tied to previous note
                   console.log("Skipped tied parent note, pitches : " + pitch + ", " + lastPitch)
                }
@@ -306,7 +310,7 @@ MuseScore {
                   var chord = cursor.element;
                   pitch = chord.notes[0].pitch;
 
-                  if (pitch == lastPitch) {
+                  if (pitch === lastPitch) {
                      // don't add tab if parent note is same pitch as previous note
                      console.log("Skipped repeated parent note, pitches : " + pitch + ", " + lastPitch)
                   }
@@ -387,14 +391,16 @@ MuseScore {
             cursor.next()
          } // end while segment
       } // end for staff
-      Qt.quit()
-   }
+
+      curScore.endCmd();
+      quit()
+   } // end renderTinWhistleTablature
 
    onRun: {
       console.log("Hello tin whistle tablature")
 
       if (typeof curScore === 'undefined')
-         Qt.quit()
+         quit()
 
       if (Qt.fontFamilies().indexOf("Tin Whistle Tab") >= 0) {
          renderTinWhistleTablature()
@@ -403,6 +409,6 @@ MuseScore {
       }
       else
          fontMissingDialog.open()
-      Qt.quit()
+      quit()
    } // end onRun
-}
+} // end MuseScore
