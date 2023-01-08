@@ -17,18 +17,19 @@
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License version 2
 //  as published by the Free Software Foundation and appearing in
-//  the file LICENCE.GPL
+//  the file LICENCE
 //=============================================================================
 
-import QtQuick 2.2
-import QtQuick.Dialogs 1.1
+import QtQuick 2.15
+import QtQuick.Dialogs 1.3
 
 import MuseScore 3.0
 
 MuseScore {
-   version: "3.4"
-   description: qsTr("This plugin provides fingering diagrams for the tin whistle. Ensure font `TinWhistleTab.ttf` is installed")
-   menuPath: "Plugins.Tin Whistle.Add tablature"
+   version: "4.0"
+   description: "This plugin provides fingering diagrams for the tin whistles, requires `TinWhistleTab.ttf` font"
+   title: "Tin Whistle Tablature"
+   categoryCode: "composing-arranging-tools"
 
    property string tabFontName: "Tin Whistle Tab"
    property bool whistleFound: false
@@ -59,7 +60,7 @@ MuseScore {
       standardButtons: StandardButton.Ok
       title: "No Staffs use a Tin Whistle"
       text: "No selected staff in the current score uses a tin whistle instrument.\n" +
-            "Use menu command \"Edit -> Instruments\" to select your instrument."
+            "Use menu command \"View -> Instruments\" to select instruments"
       onAccepted: {
          quit()
       }
@@ -78,7 +79,7 @@ MuseScore {
       }
       tabText = tabs[index]
       return tabText
-   }
+   } // end selectTinTabCharacter
 
    function setTinTabCharacterFont (text, tabSize) {
       text.fontFace = tabFontName
@@ -89,10 +90,10 @@ MuseScore {
       text.placement = Placement.BELOW
       // Turn off note relative placement
       text.autoplace = false
-   }
+   } // end setTinTabCharacterFont
 
    // For diagnostic use.
-   function dumpObjectEntries(obj, showUndefinedVals, title) {
+   function dumpObjectEntries (obj, showUndefinedVals, title) {
       console.log("VV -------- " + title + " ---------- VV")
       for (var key in obj) {
          if (showUndefinedVals || (obj[key])) {
@@ -100,9 +101,9 @@ MuseScore {
          }
       }
       console.log("^^ -------- " + title + " ---------- ^^")
-   }
+   } // end dumpObjectEntries
 
-   function renderTinWhistleTablature() {
+   function renderTinWhistleTablature () {
       curScore.startCmd();
 
       // select either the full score or just the selected staves
@@ -393,7 +394,7 @@ MuseScore {
 
       curScore.endCmd();
       quit()
-   }
+   } // end renderTinWhistleTablature
 
    onRun: {
       console.log("Hello tin whistle tablature")
@@ -410,4 +411,4 @@ MuseScore {
          fontMissingDialog.open()
       quit()
    } // end onRun
-}
+} // end MuseScore
