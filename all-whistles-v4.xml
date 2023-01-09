@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<museScore>
+      <InstrumentGroup id="woodwinds">
+            <name>Woodwinds</name>
+            <Instrument id="bflat-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>B♭ Tin Whistle</longName>
+                  <shortName>B♭ Wh.</shortName>
+                  <traitName type="tuning">B♭</traitName>
+                  <description>Tin Whistle pitched in B♭, Cm and E♭</description>
+                  <musicXMLid>wind.flutes.whistle.tin.bflat</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>70-94</aPitchRange>
+                  <pPitchRange>70-100</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="c-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>C Tin Whistle</longName>
+                  <shortName>C Wh.</shortName>
+                  <traitName type="tuning">C</traitName>
+                  <description>Tin Whistle pitched in C, Dm and F</description>
+                  <musicXMLid>wind.flutes.whistle.tin.c</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>72-96</aPitchRange>
+                  <pPitchRange>72-102</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="d-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>D Tin Whistle</longName>
+                  <shortName>D Wh.</shortName>
+                  <traitName type="tuning">D</traitName>
+                  <description>Tin Whistle pitched in D, Em and G</description>
+                  <musicXMLid>wind.flutes.whistle.tin.d</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>74-98</aPitchRange>
+                  <pPitchRange>74-104</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="common-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>Tin Whistle</longName>
+                  <shortName>Tin Wh.</shortName>
+                  <traitName type="tuning">D</traitName>
+                  <description>Tin Whistle pitched in D. The most common variant.</description>
+                  <musicXMLid>wind.flutes.whistle.tin.common</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>74-98</aPitchRange>
+                  <pPitchRange>74-104</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="eflat-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>E♭ Tin Whistle</longName>
+                  <shortName>E♭ Wh.</shortName>
+                  <traitName type="tuning">E♭</traitName>
+                  <description>Tin Whistle pitched in E♭, Fm and A♭</description>
+                  <musicXMLid>wind.flutes.whistle.tin.eflat</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>75-99</aPitchRange>
+                  <pPitchRange>75-105</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="f-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>F Tin Whistle</longName>
+                  <shortName>F Wh.</shortName>
+                  <traitName type="tuning">F</traitName>
+                  <description>Tin Whistle pitched in F, Gm and B♭</description>
+                  <musicXMLid>wind.flutes.whistle.tin.f</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>77-101</aPitchRange>
+                  <pPitchRange>77-107</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="g-tin-whistle">
+                  <family>whistles</family>
+                  <trackName>Tin Whistle</trackName>
+                  <longName>G Tin Whistle</longName>
+                  <shortName>G Wh.</shortName>
+                  <traitName type="tuning">G</traitName>
+                  <description>Tin Whistle pitched in G, Am and C</description>
+                  <musicXMLid>wind.flutes.whistle.tin.g</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>79-103</aPitchRange>
+                  <pPitchRange>79-109</pPitchRange>
+                  <Channel>
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="d-low-whistle">
+                  <family>whistles</family>
+                  <trackName>Low Whistle</trackName>
+                  <longName>D Low Whistle</longName>
+                  <shortName>D Wh.</shortName>
+                  <traitName type="tuning">D</traitName>
+                  <description>Low Whistle pitched in D, Em and G. The most common variant.</description>
+                  <musicXMLid>wind.flutes.whistle.low</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>62-86</aPitchRange>
+                  <pPitchRange>62-92</pPitchRange>
+                  <Channel>
+                        <!--MIDI: Bank 0, Prog 78; MS General: Whistle-->
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="f-low-whistle">
+                  <family>whistles</family>
+                  <trackName>Low Whistle</trackName>
+                  <longName>F Low Whistle</longName>
+                  <shortName>F Wh.</shortName>
+                  <traitName type="tuning">F</traitName>
+                  <description>Low Whistle pitched in F, Gm and B♭</description>
+                  <musicXMLid>wind.flutes.whistle.low</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>65-89</aPitchRange>
+                  <pPitchRange>65-95</pPitchRange>
+                  <Channel>
+                        <!--MIDI: Bank 0, Prog 78; MS General: Whistle-->
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+            <Instrument id="g-low-whistle">
+                  <family>whistles</family>
+                  <trackName>Low Whistle</trackName>
+                  <longName>G Low Whistle</longName>
+                  <shortName>G Wh.</shortName>
+                  <traitName type="tuning">G</traitName>
+                  <description>Low Whistle pitched in G, Am and C</description>
+                  <musicXMLid>wind.flutes.whistle.low</musicXMLid>
+                  <clef>G8va</clef>
+                  <barlineSpan>1</barlineSpan>
+                  <aPitchRange>67-91</aPitchRange>
+                  <pPitchRange>67-97</pPitchRange>
+                  <Channel>
+                        <!--MIDI: Bank 0, Prog 78; MS General: Whistle-->
+                        <program value="78"/> <!--Whistle-->
+                  </Channel>
+                  <genre>world</genre>
+            </Instrument>
+      </InstrumentGroup>
+</museScore>

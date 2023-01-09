@@ -6,8 +6,7 @@ This provides a plugin to automatically add fingering / tab diagrams to the
 notes in scores for tin whistle. The plugin will adjust for tin whistles tuned
 to D, C and Bb, according to the instrument defined for each staff. Note that
 if the staff instrument is not a whistle then no tabs are applied, otherwise the
-plugin will adjust the tab diagram position for the lowest note possible
-(currently D, C or Bb).
+plugin will adjust the tab diagram position for the lowest note possible.
 
 See the "Here be Dragons" section of this document that discusses various
 quirks related to early MuseScore 3 releases.
@@ -116,3 +115,60 @@ The plugin will skip any staffs that are not for a Tin Whistle, so for example
 if the staff is for the Irish Flute then it will not apply the tabs. This makes
 sense as other instrument's fingering will be different.
 
+## Extra Tin Whistle and Low Whistle Tunings
+The files `all-whistles.xml` and `all-whistles-v4.xml` are extra instrument files
+for adding both High Tin Whistle types and Low Whistle types to MuseScore.  
+MuseScore comes with whistles D, C and B♭ by default but you may want to use other tunings.
+
+The High Tin Whistle, which is a metal 6 hole Flageolet, comes in various tunings.
+These are listed in order of decreasing physical size:
+* "B♭ Tin Whistle" tuned to key B♭, also used for keys Cm and E♭
+* "C Tin Whistle" tuned to C, also for Dm and F
+* "D Tin Whistle" tuned to D, also for Em and G
+* "E♭ Tin Whistle" tuned to E♭, also for Fm and A♭
+* "F Tin Whistle" tuned to F, also for Gm (F can be played on a C whistle)
+* "G Tin Whistle" tuned to G, also for Am (G can be played on a D whistle)
+
+Tuning to D is by far the most common, so "Tin Whistle" is the same as "D Tin Whistle".
+
+The Low Whistle is larger than the more well-known tin whistle and has a lower pitch.
+This whistle is commonly available in three tunings:
+* "D Low Whistle" tuned to D4, also used for keys Em and G
+* "F Low Whistle" tuned to F4, also used for Gm and B♭
+* "G Low Whistle" tuned to G4, also used for Am and C
+
+### Install for extra whistles
+The file `all-whistles.xml` or `all-whistles-v4.xml` needs to be installed using the MuseScore menu.
+
+#### Install for MuseScore 4.x
+Download the `all-whistles-v4.xml` instrument extension file to your operating system.
+
+1. Start Version 4.x Musescore
+2. use the drop down menus to navigate 'MuseScore' then 'Preferences...' then 'Score' panel
+3. Use the file icon beside 'Score Order List 2:' to select the downloaded `all-whistles.xml` file
+4. Accept the changes using the OK button
+
+You can now add a tin/low whistle staff to your score using the 'Instruments' tab and 'Add' button.
+Note that these whistles appear in the 'World Music' genre, not the 'Common' genre.
+
+#### Install for MuseScore 2.x and  MuseScore 3.x
+Download the `all-whistles.xml` instrument extension file to your operating system.  
+Use the same file for both MuseScore version 2.x and version 3.x :
+
+1. Either MuseScore 2.x: copy file `all-whistles.xml` to `Documents/MuseScore2/Extensions/all-whistles.xml` 
+2. Or for  MuseScore 3.x: copy file `all-whistles.xml` to `Documents/MuseScore3/Extensions/all-whistles.xml`
+3. within Musescore menu, navigate to 'MuseScore' then 'Preferences...' then 'Score' tab
+4. in the Default Files panel, add the file to 'Instrument List 2' extension by:
+5. browsing to `Documents/MuseScore3/Extensions/all-whistles.xml` and add to 'Instrument List 2'
+6. Accept the changes with the OK button
+
+You may now add a tin whistle staff using MuseScore menu item 'Edit' then 'Instruments...', 
+where MuseScore lists these extra instruments under 'World Music' 'Woodwinds'.
+
+Once a tin whistle staff is added to the score there is no need to keep the instrument
+file `all-whistles.xml` in the 'Instrument List 2' extension.
+
+## Examples
+
+The score `examples/tin_whistle_range_test.mscz` is an example showing all the High Tin Whistle staves.  
+The score `examples/low_whistle_range_test.mscz` shows all three Low Whistle staves.
