@@ -2,7 +2,16 @@
 Source code for the [MuseScore plugin](https://musescore.org/en/project/tin-whistle-tablature)
 which adds tablature / finger diagrams to a tin whistle staff in a score.
 
-1. [Introduction](#Introduction)
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Installing Font](#installing-font)
+4. [Using the plugin](#using-the-plugin)
+5. [Here be Dragons](#here-be-dragons)
+6. [Having problems?](#having-problems)
+7. [Extra Tin Whistle and Low Whistle Tunings](#extra-tin-whistle-and-low-whistle-tunings)
+8. [Install for extra whistles](#install-for-extra-whistles)
+9. [Examples](#examples)
+10. [Other Stuff](#other-stuff)
 
 ### Introduction
 This provides a plugin to automatically add fingering / tab diagrams to the notes in scores for tin whistles and low whistles.
