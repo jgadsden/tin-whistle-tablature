@@ -26,7 +26,7 @@ import QtQuick.Dialogs 1.3
 import MuseScore 3.0
 
 MuseScore {
-   version: "4.0"
+   version: "4.1"
    description: "This plugin provides fingering diagrams for the tin whistles, requires `TinWhistleTab.ttf` font"
    title: "Tin Whistle Tablature"
    categoryCode: "composing-arranging-tools"
@@ -145,46 +145,46 @@ MuseScore {
          if (hasInstrumentId) {
             instrument = curScore.staves[staff].part.instrumentId
          } else {
-            // Assume a D whistle if currently running MuseScore version is missing
-            // the instrumentId property.
-            instrument = "wind.flutes.whistle.tin.d"
+            // use the common whistle if the instrumentId property is missing
+            // as some MuseScore versions do not implement it
+            instrument = "common-tin-whistle"
          }
 
-         // MuseScore 3 returned the MusicXML instrument ID, MuseScore 4 returns its own instrument ID
-         if (instrument === "c-tin-whistle") {
+         // MuseScore 3 returned the MusicXML instrument ID, some versions of MuseScore 4 returned their own instrument ID, search for both
+         if (instrument === "c-tin-whistle" || instrument === "wind.flutes.whistle.tin.c" || instrument === "wind.flutes.whistle.tin") {
             basePitch = 72   // is C tuning
             tabOffsetY = 3.3
             whistleFound = true;
-         } else if (instrument === "bflat-tin-whistle") {
+         } else if (instrument === "bflat-tin-whistle" || instrument === "wind.flutes.whistle.tin.bflat") {
             basePitch = 70   // B flat tuning
             tabOffsetY = 3.6
             whistleFound = true;
-         } else if (instrument === "d-tin-whistle" || instrument === "common-tin-whistle") {
-            // default is D tuning because it is the most common
+         } else if (instrument === "d-tin-whistle" || instrument === "common-tin-whistle" || instrument === "wind.flutes.whistle.tin.d" || instrument === "wind.flutes.whistle.tin.common") {
+            // D tuning is the most common
             basePitch = 74   // D tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument === "eflat-tin-whistle") {
+         } else if (instrument === "eflat-tin-whistle" || instrument === "wind.flutes.whistle.tin.eflat") {
             basePitch = 75   // E flat tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument === "f-tin-whistle") {
+         } else if (instrument === "f-tin-whistle" || instrument === "wind.flutes.whistle.tin.f") {
             basePitch = 77   // F tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument === "g-tin-whistle") {
+         } else if (instrument === "g-tin-whistle" || instrument === "wind.flutes.whistle.tin.g") {
             basePitch = 79   // G tuning
             tabOffsetY = 3
             whistleFound = true;
-         } else if (instrument === "d-low-whistle") {
+         } else if (instrument === "d-low-whistle" || instrument === "wind.flutes.whistle.low.d") {
             basePitch = 62   // D tuning for low whistle
             tabOffsetY = 5.6
             whistleFound = true;
-         } else if (instrument === "f-low-whistle") {
+         } else if (instrument === "f-low-whistle" || instrument === "wind.flutes.whistle.low.f") {
             basePitch = 65   // F tuning for low whistle
             tabOffsetY = 4.9
             whistleFound = true;
-         } else if (instrument === "g-low-whistle") {
+         } else if (instrument === "g-low-whistle" || instrument === "wind.flutes.whistle.low.g") {
             basePitch = 67   // G tuning for low whistle
             tabOffsetY = 4.0
             whistleFound = true;
