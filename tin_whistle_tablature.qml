@@ -103,6 +103,26 @@ MuseScore {
       console.log("^^ -------- " + title + " ---------- ^^")
    } // end dumpObjectEntries
 
+   function removeDuplicatesInSegment(segment, elementToKeep) {
+      var removables = [];
+
+      for (var i = 0; i < segment.annotations.length; i++) {
+         var element = segment.annotations[i];
+         if (element.is(elementToKeep)) {
+            continue;
+         }
+
+         if (element.offsetX == elementToKeep.offsetX && element.offsetY == elementToKeep.offsetY) {
+            removables.push(element);
+         }
+      }
+
+      for (var i = 0; i < removables.length; i++) {
+         var element = segment.annotations[i];
+         removeElement(element);
+      }
+   }
+
    function renderTinWhistleTablature () {
       curScore.startCmd();
 
@@ -288,6 +308,8 @@ MuseScore {
                      // (See the note below about behavior of the text.offsetY property.)
                      text.offsetY = tabOffsetY   // place the tab below the staff
 
+                     removeDuplicatesInSegment(cursor.segment, text);
+
                      // Create new text element for next tab placement
                      text = newElement(Element.STAFF_TEXT)
                   }
@@ -340,6 +362,8 @@ MuseScore {
                      else
                         text.offsetX = 0.5
 
+                     removeDuplicatesInSegment(cursor.segment, text);
+
                      // Create new text element for next tab placement
                      text = newElement(Element.STAFF_TEXT)
                   } // end if repeated
@@ -375,6 +399,8 @@ MuseScore {
                      }
                      // (See the note below about behavior of the text.offsetY property.)
                      text.offsetY = tabOffsetY   // place the tab below the staff
+
+                     removeDuplicatesInSegment(cursor.segment, text);
 
                      // Create new text element for next tab placement
                      text = newElement(Element.STAFF_TEXT)
