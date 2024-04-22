@@ -1,6 +1,6 @@
 ## Tin Whistle Tablature
 
-Source code for the [MuseScore plugin][repo] which adds tablature / finger diagrams
+Source code for the [MuseScore plugin][site] which adds tablature / finger diagrams
 to a tin whistle staff in a score.
 
 1. [Introduction](#introduction)
@@ -204,5 +204,6 @@ MuseScore Plugin API compatibility: 2.x, 3.x, 4.x
 [plugin-v34]: https://musescore.org/sites/musescore.org/files/2023-01/tin_whistle_tablature_v34_0.qml
 [plugin-v4]: https://musescore.org/sites/musescore.org/files/2023-07/tin_whistle_tablature_v4.qml
 [repo]: https://github.com/jgadsden/tin-whistle-tablature/
+[site]: https://musescore.org/en/project/tin-whistle-tablature
 [whistles-v23]: https://musescore.org/sites/musescore.org/files/2023-01/all-whistles_0.xml
 [whistles-v4]: https://musescore.org/sites/musescore.org/files/2023-01/all-whistles-v4_0.xml
