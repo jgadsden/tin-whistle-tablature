@@ -1,6 +1,6 @@
 ## Tin Whistle Tablature
 
-Source code for the [MuseScore plugin][repo] which adds tablature / finger diagrams
+Source code for the [MuseScore plugin][site] which adds tablature / finger diagrams
 to a tin whistle staff in a score.
 
 1. [Introduction](#introduction)
@@ -47,14 +47,13 @@ that you may bump into.
 
 ### Installing Font
 
-This plugin relies on a tin whistle tablature font being installed from 
-[Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip).
-You can also download it from our [release area][font].
+This plugin relies on a tin whistle tablature font being installed from
+[Blayne Chastain's site](https://www.blaynechastain.com/) which can be downloaded from our [release area][font].
 
 If the font isn't installed you will be presented with a message box telling you
-how to obtain the font. To install the font, it is usually just a case of double-clicking 
-the downloaded `.ttf` file and agreeing to the install process. If that does not work then 
-on linux systems try copying the TinWhistleTab.ttf font file to the `/usr/share/fonts/truetype/` directory.
+how to obtain the font. To install the font, it is usually just a case of double-clicking
+the downloaded `.ttf` file and agreeing to the install process. If that does not work then
+on Linux systems try copying the `TinWhistleTab.ttf` font file to the `/usr/share/fonts/truetype/` directory.
 However, if you are installing the font on a Windows 10 system you will need to ensure you install the font
 for "all users". You can do this by right clicking on the file and selecting "Install for all users"
 as illustrated here:
@@ -78,7 +77,7 @@ When you wish to apply the tabs then navigate to 'Plugins' -> 'Tin Whistle' ->
 
 ![Diagram of tin whistle tabs applied to the score version 3](images/whistle-tabs-after-v3.png  "Tin Whistle tabs applied version 3")
 
-and the equivelent if using MuseScore 2 :
+and the equivalent if using MuseScore 2 :
 
 ![Diagram of tin whistle tabs applied to the score version 2](images/whistle-tabs-after.png  "Tin Whistle tabs applied version 2")
 
@@ -86,7 +85,7 @@ You can back out by navigating to 'Edit' -> 'Undo'.
 
 ### Having problems?
 
-Note that this plugin relies on a font being installed, see the 'Installating font' instructions.
+Note that this plugin relies on a font being installed, see the 'Installing font' instructions.
 
 The plugin will skip any staffs that are not for a Tin Whistle, so for example
 if the staff is for the Irish Flute then it will not apply the tabs.
@@ -95,7 +94,7 @@ This makes sense as other instrument's fingering will be different.
 ## Extra Tin Whistle and Low Whistle Tunings
 
 The files `all-whistles.xml` and `all-whistles-v4.xml` are extra instrument files
-for adding both High Tin Whistle types and Low Whistle types to MuseScore.  
+for adding both High Tin Whistle types and Low Whistle types to MuseScore.
 MuseScore comes with whistles D, C and B♭ by default but you may want to use other tunings.
 
 The High Tin Whistle, which is a metal 6 hole Flageolet, comes in various tunings.
@@ -125,7 +124,7 @@ The file `all-whistles.xml` or `all-whistles-v4.xml` needs to be installed using
 
 Download the `all-whistles-v4.xml` [instrument extension file][whistles-v4] to your operating system.
 
-1. Start Version 4.x Musescore
+1. Start Version 4.x MuseScore
 2. use the drop down menus to navigate 'MuseScore' then 'Preferences...' then 'Score' panel
 3. Use the file icon beside 'Score Order List 2:' to select the downloaded `all-whistles.xml` file
 4. Accept the changes using the OK button
@@ -140,7 +139,7 @@ Use the same file for both MuseScore version 2.x and version 3.x :
 
 1. For MuseScore 2.x: copy file `all-whistles.xml` to `Documents/MuseScore2/Extensions/all-whistles.xml`
 2. Or for  MuseScore 3.x: copy file `all-whistles.xml` to `Documents/MuseScore3/Extensions/all-whistles.xml`
-3. within Musescore menu, navigate to 'MuseScore' then 'Preferences...' then 'Score' tab
+3. within MuseScore menu, navigate to 'MuseScore' then 'Preferences...' then 'Score' tab
 4. in the Default Files panel, add the file to 'Instrument List 2' extension by:
 5. browsing to `Documents/MuseScore3/Extensions/all-whistles.xml` and add to 'Instrument List 2'
 6. Accept the changes with the OK button
@@ -164,18 +163,18 @@ adjust the tab diagram position for the lowest note possible.
 
 Prior to MuseScore 3.2:
 
-* The instrument type used on a staff can NOT be detected. In this case the plugin will 
-assume that a whistle tuned to D is used - this being the most common whistle. 
+* The instrument type used on a staff can NOT be detected. In this case the plugin will
+assume that a whistle tuned to D is used - this being the most common whistle.
 
-* This plugin only supports grace notes that lead the main note. Tabs for trailing grace 
-notes will be rendered as leading notes which is not what you want. In fact the trailing 
-notes will be out of order. 
+* This plugin only supports grace notes that lead the main note. Tabs for trailing grace
+notes will be rendered as leading notes which is not what you want. In fact the trailing
+notes will be out of order.
 
 Prior to MuseScore 3.3:
 
-* You may see some minor issues with grace note tab positioning. The actual physical 
-position of the grace notes was not available before v3.3 so a heuristic approach 
-(aka good 'ole human observation) is used to get a decent overall result even though 
+* You may see some minor issues with grace note tab positioning. The actual physical
+position of the grace notes was not available before v3.3 so a heuristic approach
+(aka good 'ole human observation) is used to get a decent overall result even though
 it's not perfect.
 
 Here is an example of how the fingering tab images are accurately positioned in MuseScore 3.3+:
@@ -204,5 +203,6 @@ MuseScore Plugin API compatibility: 2.x, 3.x, 4.x
 [plugin-v34]: https://musescore.org/sites/musescore.org/files/2023-01/tin_whistle_tablature_v34_0.qml
 [plugin-v4]: https://musescore.org/sites/musescore.org/files/2023-07/tin_whistle_tablature_v4.qml
 [repo]: https://github.com/jgadsden/tin-whistle-tablature/
+[site]: https://musescore.org/en/project/tin-whistle-tablature
 [whistles-v23]: https://musescore.org/sites/musescore.org/files/2023-01/all-whistles_0.xml
 [whistles-v4]: https://musescore.org/sites/musescore.org/files/2023-01/all-whistles-v4_0.xml

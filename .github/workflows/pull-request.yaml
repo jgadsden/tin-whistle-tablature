@@ -1,0 +1,35 @@
+name: Pull request pipeline
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# for security reasons the github actions are pinned to specific release versions
+jobs:
+  link_checker:
+    name: Link checker
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout markdown
+        uses: actions/checkout@v4.1.1
+
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v1.9.1
+        with:
+          args: --verbose --no-progress --max-retries 5 '**/*.md' '*.md'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  spell_checker:
+    name: Check spelling
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout markdown
+        uses: actions/checkout@v4.1.1
+
+      - name: spell_checker
+        uses: rojopolis/spellcheck-github-actions@0.36.0

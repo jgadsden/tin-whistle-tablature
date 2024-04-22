@@ -1,13 +1,14 @@
 There are three branches for this plugin in the code [repository][repo]:
+
 * MuseScore 2.x is on branch 'version2'
 * MuseScore 3.x is on branch 'version3'
 * the 'main' branch is for MuseScore 4.x
 
-Note that the instrumentId changed for version 4.0.x and then changed back again for 4.1
+Note that the instrument ID changed for version 4.0.x and then changed back again for 4.1
 
 ### test
 
-* Load the pluging and makes sure the Plugin Manager can enable/disable it
+* Load the plugin and makes sure the Plugin Manager can enable/disable it
 * MuseScore 4.x onwards removed the Plugin Creator tool,
     so if you want console logs then run MuseScore itself from command line
 * Apply tabs to the range test examples, all staves should have the same tabs:
@@ -31,17 +32,24 @@ There are _two_ release areas, MuseScore community and also github repo release
 * Set as the latest release
 * Add the release notes along the lines of:
 
-```
+```text
 Version 4.1 Tin Whistle plugin tested on MuseScore 4 v4.1.0
 
 Plugin file: `tin_whistle_tablature.qml`
 Whistle instrument file: `all-whistles-v4.xml`
 
-Note that this is may not be compatible with earlier versions of [MuseScore 3](https://github.com/jgadsden/tin-whistle-tablature/releases/tag/v3.4) and [MuseScore 2](https://github.com/jgadsden/tin-whistle-tablature/releases/tag/v2.3.2) - use the previous releases for those.
+Note that this is may not be compatible with earlier versions of [MuseScore 3][ms3]
+and [MuseScore 2][ms2] - use the previous releases for those.
 
 A font file `TinWhistleTab.ttf` is attached for convenience from Blayne Chastain and states:
 
-_Tin Whistle Tab font is free of charge for both personal and commercial use. Distribution for a fee is not allowed. Please credit Blayne Chastain in any publication in which this font appears with the following copyright notice: "Tin Whistle Tab font © Blayne Chastain / [www.blaynechastain.com](http://www.blaynechastain.com/)"_
+_Tin Whistle Tab font is free of charge for both personal and commercial use. Distribution for a fee is not allowed._
+_Please credit Blayne Chastain in any publication in which this font appears with the following copyright notice:_
+_"Tin Whistle Tab font © Blayne Chastain / [www.blaynechastain.com][bc]"_
+
+[bc]: http://www.blaynechastain.com/
+[ms2]: https://github.com/jgadsden/tin-whistle-tablature/releases/tag/v2.3.2
+[ms3]: https://github.com/jgadsden/tin-whistle-tablature/releases/tag/v3.4
 ```
 
 When all is good then publish the release, it can always be edited at a later date
