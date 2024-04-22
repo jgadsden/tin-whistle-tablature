@@ -48,8 +48,7 @@ that you may bump into.
 ### Installing Font
 
 This plugin relies on a tin whistle tablature font being installed from
-[Blayne Chastain's site](https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip).
-You can also download it from our [release area][font].
+[Blayne Chastain's site](https://www.blaynechastain.com/) which can be downloaded from our [release area][font].
 
 If the font isn't installed you will be presented with a message box telling you
 how to obtain the font. To install the font, it is usually just a case of double-clicking

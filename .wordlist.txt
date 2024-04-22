@@ -15,3 +15,7 @@ tunings
 Flageolet
 Dm
 QML
+socio
+OWASP
+onwards
+sexualized
