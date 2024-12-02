@@ -33,6 +33,8 @@ that you may bump into.
 * For MuseScore 4 download the [plugin file][plugin-v4] and copy it to directory `Documents/MuseScore4/Plugins/`
 
   * Install using the [instructions][installv4] in the MuseScore 4 Handbook
+  * Ensure that the plugin file is executable; this is the default on Windows systems
+  * Note that for MacOS and Linux, executable permissions may have to be set manually for the plugin file
 
 * If using MuseScore 3 version 3.4 or later then download this [plugin file][plugin-v34]  
     If using MuseScore 3 version 3.3 or earlier then download a different [plugin file][plugin-v32]  
