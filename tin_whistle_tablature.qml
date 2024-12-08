@@ -38,14 +38,13 @@ MuseScore {
 
    MessageDialog {
       id: fontMissingDialog
-      title: "Missing Tin Whistle Tablature font!"
+      title: "Missing Tin Whistle Tablature font"
       text: "The Tin Whistle Tab font is not installed on your device."
-      detailedText:  "You can download the font from the web here:\n\n" +
-         "https://www.blaynechastain.com/wp-content/uploads/TinWhistleTab.zip\n\n" +
-         "The Zip file contains the TinWhistleTab.ttf font file you need to install on your device.\n" +
+      detailedText:  "You can download the font from the web here:\n" +
+         "https://github.com/jgadsden/tin-whistle-tablature/releases/download/v4.2/TinWhistleTab.ttf\n" +
+         "Note that you will also need to restart MuseScore for it to recognize the new font.\n" +
          "If you are running Windows 10 you must install the font for \"all users\".\n" +
-         "This is due to a quirk in the QT framework that MuseScore uses to implement the program.\n" +
-         "Note that you will also need to restart MuseScore for it to recognize the new font."
+         "This is due to a quirk in the QT framework that MuseScore uses to implement the program.\n"
 
       onAccepted: {
          quit();
@@ -105,7 +104,7 @@ MuseScore {
    } // end dumpObjectEntries
 
    function getWhistlePitch(instrument) {
-      var pitch = none
+      var pitch = "none"
       // MuseScore 3 returned the MusicXML instrument ID, some versions of MuseScore 4 returned their own instrument ID, search for both
       if (instrument === "c-tin-whistle" || instrument === "wind.flutes.whistle.tin.c" || instrument === "wind.flutes.whistle.tin") {
          pitch = "c"
