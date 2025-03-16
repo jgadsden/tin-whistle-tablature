@@ -102,21 +102,23 @@ MuseScore comes with whistles D, C and B♭ by default but you may want to use o
 The High Tin Whistle, which is a metal 6 hole Flageolet, comes in various tunings.
 These are listed in order of decreasing physical size:
 
-* "B♭ Tin Whistle" tuned to key B♭, also used for keys Cm and E♭
-* "C Tin Whistle" tuned to C, also for Dm and F
-* "D Tin Whistle" tuned to D, also for Em and G
-* "E♭ Tin Whistle" tuned to E♭, also for Fm and A♭
-* "F Tin Whistle" tuned to F, also for Gm (F can be played on a C whistle)
-* "G Tin Whistle" tuned to G, also for Am (G can be played on a D whistle)
+* "B♭ Tin Whistle" tuned to key B♭ (B3♭), also used for keys Cm and E♭
+* "C Tin Whistle" tuned to C3, also for Dm and F
+* "D Tin Whistle" tuned to D3, also for Em and G
+* "E♭ Tin Whistle" tuned to E♭ (E3♭), also for Fm and A♭
+* "F Tin Whistle" tuned to F3, also for Gm (F can be played on a C whistle)
+* "G Tin Whistle" tuned to G3, also for Am (G can be played on a D whistle)
 
 Tuning to D is by far the most common, so "Tin Whistle" is the same as "D Tin Whistle".
 
-The Low Whistle is larger than the more well-known tin whistle and has a lower pitch.
-This whistle is commonly available in three tunings:
+The Low Whistle is larger than the more well-known tin whistle and has a lower pitch one octave down.
+Low whistles are commonly available in three tunings:
 
-* "D Low Whistle" tuned to D4, also used for keys Em and G
-* "F Low Whistle" tuned to F4, also used for Gm and B♭
-* "G Low Whistle" tuned to G4, also used for Am and C
+* "D Low Whistle" tuned to D2, also used for keys Em and G
+* "F Low Whistle" tuned to F2, also used for Gm and B♭
+* "G Low Whistle" tuned to G2, also used for Am and C
+
+Refer to [Scientific pitch notation][notation] for an explanation of D2, D3 etc
 
 ### Install for extra whistles
 
@@ -200,6 +202,7 @@ MuseScore Plugin API compatibility: 2.x, 3.x, 4.x
 [issues]: https://musescore.org/en/project/issues/TinWhistleTablature
 [license]: https://raw.githubusercontent.com/jgadsden/tin-whistle-tablature/main/LICENSE
 [manager]: https://musescore.org/en/handbook/3/plugins#enable-disable-plugins
+[notation]: https://en.wikipedia.org/wiki/Scientific_pitch_notation
 [plugin-v2]: https://musescore.org/sites/musescore.org/files/2023-01/tin_whistle_tablature_v232_0.qml
 [plugin-v32]: https://musescore.org/sites/musescore.org/files/2023-01/tin_whistle_tablature_v32_0.qml
 [plugin-v34]: https://musescore.org/sites/musescore.org/files/2023-01/tin_whistle_tablature_v34_0.qml
